@@ -44,6 +44,7 @@ function addClickHandlersToElements(){
             var jQueryObj = $(this);
             removeStudent( student_array, jQueryObj );
       });
+      $('.get_data_button').on('click', handleGetDataClicked);
 }
 
 /***************************************************************************************************
@@ -115,7 +116,6 @@ function renderStudentOnDom( studentObj ) {
       var button = $('<button>', {
             text: 'Delete',
             class: 'btn btn-danger delete_row',
-            attr: {'data':'45'},
       })
       
       $(inner_td_button).append(button);
@@ -150,6 +150,10 @@ function calculateGradeAverage ( student_array ){
       average = sum / student_array.length;
       average = parseInt(average);
 
+      if ( average === NaN) {
+            average = 0;
+      }
+
       return average
 }
 /***************************************************************************************************
@@ -170,7 +174,45 @@ function removeStudent ( student_array, jQueryObj ) {
       var current_index = tr_DOM_element.index();
       student_array.splice( current_index, 1 );
       tr_DOM_element.remove();
+
+      var average = calculateGradeAverage ( student_array );
+      renderGradeAverage(average);
 }
+/***************************************************************************************************
+ * handleGetDataClicked - handles clicks on the get_data_button
+ * @param: 
+ * @returns 
+ */
+function handleGetDataClicked () {
+      var jQueryObj = this;
+      console.log('handleGetDataClicked')
+      getData();
+}
+/***************************************************************************************************
+ * getData - pulls data from database using AJAX call
+ * @param: 
+ * @returns 
+ */
+function getData () {
+      console.log('getData');
 
-
-
+      var ajaxOptions = {
+            url: 'http://s-apis.learningfuze.com/sgt/get',
+            // 'api_key': 'k9mLtN7WCf',
+            // key: 'api_key',
+            // value: 'k9mLtN7WCf',
+            method: 'post',
+            data:{'api_key':'k9mLtN7WCf'},
+            success: doWhenDataReceived,
+            dataType: 'json',
+        };
+        $.ajax( ajaxOptions )
+}
+/***************************************************************************************************
+ * getData - runs after the data is got
+ * @param: 
+ * @returns 
+ */
+function doWhenDataReceived ( response ) {
+      console.log(response);
+}

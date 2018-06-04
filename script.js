@@ -126,11 +126,14 @@ function renderStudentOnDom( studentObj ) {
 
       $(button).on('click', function(){
             var current_index = outer_tr.index();
-            student_array.splice( current_index, 1 );
-            outer_tr.remove();
+
+            deleteData( current_index, outer_tr );
+
+            // student_array.splice( current_index, 1 );
+            // outer_tr.remove();
             
-            var average = calculateGradeAverage ( student_array );
-            renderGradeAverage(average);
+            // var average = calculateGradeAverage ( student_array );
+            // renderGradeAverage(average);
       })
 }
 /***************************************************************************************************
@@ -228,6 +231,34 @@ function sendData ( name, course, grade ) {
         $.ajax( ajaxOptions )
         //debugger
       //return 11
+}
+/***************************************************************************************************
+ * deleteData - send data to server
+ * @param: 
+ * @returns 
+ */
+function deleteData ( current_index, outer_tr ) {
+      var student_id = student_array[current_index].id;
+      var ajaxOptions = {
+            url: 'http://s-apis.learningfuze.com/sgt/delete',
+            method: 'post',
+            data:{ 'api_key':'k9mLtN7WCf', 'student_id': student_id },
+            success: function (response){
+                  debugger
+                  student_array.splice( current_index, 1 );
+                  // outer_tr.remove();
+
+                  var average = calculateGradeAverage ( student_array );
+                  renderGradeAverage(average);
+                  outer_tr.remove();
+            },
+            error: function(){
+                  console.log(response);
+            },
+            // success: doWhenDataSentAndReturned,
+            dataType: 'json',
+        };
+        $.ajax( ajaxOptions )
 }
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got

@@ -55,9 +55,6 @@ function addClickHandlersToElements(){
        none
  */
 function handleAddClicked( event ){
-      //debugger
-      console.log('add');
-      console.log(event);
       addStudent();
 }
 /***************************************************************************************************
@@ -67,7 +64,6 @@ function handleAddClicked( event ){
  * @calls: clearAddStudentFormInputs
  */
 function handleCancelClick(){
-      console.log('cancel')
       clearAddStudentFormInputs();
 }
 /***************************************************************************************************
@@ -83,7 +79,6 @@ function addStudent(){
             grade: parseFloat($('#studentGrade').val()),
       }
       student_array.push(new_student_object);
-      // console.log(new_student_object);
 
       clearAddStudentFormInputs();
       updateStudentList( student_array );
@@ -175,27 +170,12 @@ function renderGradeAverage(average){
       $('.avgGrade').text(average);
 }
 /***************************************************************************************************
- * removeStudent - removes student from student_array and dom
- * @param: {array} students  the array of student objects
- * @returns {undefined} none
- */
-function removeStudent ( student_array, jQueryObj ) {
-      var tr_DOM_element = jQueryObj.closest('tr');
-      var current_index = tr_DOM_element.index();
-      student_array.splice( current_index, 1 );
-      tr_DOM_element.remove();
-
-      var average = calculateGradeAverage ( student_array );
-      renderGradeAverage(average);
-}
-/***************************************************************************************************
  * handleGetDataClicked - handles clicks on the get_data_button
  * @param: 
  * @returns 
  */
 function handleGetDataClicked () {
       var jQueryObj = this;
-      console.log('handleGetDataClicked')
       getData();
 }
 /***************************************************************************************************
@@ -204,7 +184,6 @@ function handleGetDataClicked () {
  * @returns 
  */
 function getData () {
-      console.log('getData()');
       var ajaxOptions = {
             url: 'http://s-apis.learningfuze.com/sgt/get',
             method: 'post',
@@ -220,7 +199,6 @@ function getData () {
  * @returns 
  */
 function sendData () {
-      console.log('sendData()');
       var ajaxOptions = {
             url: 'http://s-apis.learningfuze.com/sgt/get',
             method: 'post',
@@ -236,8 +214,6 @@ function sendData () {
  * @returns 
  */
 function doWhenDataReceived ( response ) {
-      console.log('doWhenDataReceived()');
-      console.log(response);
 }
 /***************************************************************************************************
  * getData - runs after the data is got
@@ -245,6 +221,4 @@ function doWhenDataReceived ( response ) {
  * @returns 
  */
 function doWhenDataReceived ( response ) {
-      console.log('doWhenDataSent()');
-      console.log(response);
 }

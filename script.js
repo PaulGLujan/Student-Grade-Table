@@ -41,10 +41,10 @@ function initializeApp(){
 function addClickHandlersToElements(){
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
-      $('.student-list').on('click', '.delete_row', function (){
-            var jQueryObj = $(this);
-            removeStudent( student_array, jQueryObj );
-      });
+      // $('.student-list').on('click', '.delete_row', function (){
+      //       var jQueryObj = $(this);
+      //       removeStudent( student_array, jQueryObj );
+      // });
       $('.get_data_button').on('click', handleGetDataClicked);
 }
 
@@ -122,6 +122,15 @@ function renderStudentOnDom( studentObj ) {
       $(inner_td_button).append(button);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
+
+      $(button).on('click', function(){
+            var current_index = outer_tr.index();
+            student_array.splice( current_index, 1 );
+            outer_tr.remove();
+            
+            var average = calculateGradeAverage ( student_array );
+            renderGradeAverage(average);
+      })
 }
 /***************************************************************************************************
  * updateStudentList - centralized function to update the average and call student list update

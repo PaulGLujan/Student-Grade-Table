@@ -55,6 +55,7 @@ function addClickHandlersToElements(){
        none
  */
 function handleAddClicked( event ){
+      debugger
       addStudent();
 }
 /***************************************************************************************************
@@ -135,7 +136,9 @@ function renderStudentOnDom( studentObj ) {
  */
 function updateStudentList ( student_array ) {
       var last_student_index = student_array.length - 1;
-
+      // for ( let i = 0; i < student_array.length; i++ ) {
+      //       renderStudentOnDom( student_array[i] );
+      // }
       renderStudentOnDom(student_array[last_student_index]);
       var average = calculateGradeAverage ( student_array );
       renderGradeAverage(average);
@@ -221,4 +224,12 @@ function doWhenDataReceived ( response ) {
  * @returns 
  */
 function doWhenDataReceived ( response ) {
+      // student_array = response.data;      
+      for ( let i = 0; i < response.data.length; i++ ) {
+            var currentStudent = response.data[i];
+            student_array.push(currentStudent)
+            updateStudentList(student_array);
+      }
+      // updateStudentList(student_array);
+      console.log(student_array);      
 }

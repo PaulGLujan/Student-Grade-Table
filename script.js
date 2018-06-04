@@ -74,15 +74,20 @@ function handleCancelClick(){
  * @calls clearAddStudentFormInputs, updateStudentList
  */
 function addStudent(){
-      var new_student_object = {
-            name: $('#studentName').val(),
-            course: $('#course').val(),
-            grade: parseFloat($('#studentGrade').val()),
-      }
-      student_array.push(new_student_object);
-
+      var name = $('#studentName').val();
+      var course = $('#course').val();
+      var grade = parseFloat($('#studentGrade').val());
       clearAddStudentFormInputs();
-      updateStudentList( student_array );
+
+      sendData ( name, course, grade );
+      // var new_student_object = {
+      //       name: $('#studentName').val(),
+      //       course: $('#course').val(),
+      //       grade: parseFloat($('#studentGrade').val()),
+      // }
+      // student_array.push(new_student_object);
+
+      // updateStudentList( student_array );
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
@@ -201,25 +206,31 @@ function getData () {
  * @param: 
  * @returns 
  */
-function sendData () {
+function sendData ( name, course, grade ) {
       var ajaxOptions = {
-            url: 'http://s-apis.learningfuze.com/sgt/get',
+            url: 'http://s-apis.learningfuze.com/sgt/create',
             method: 'post',
-            data:{ 'api_key':'k9mLtN7WCf', name:'Me', course:'Being Me', grade: 100 },
-            success: doWhenDataSent,
+            data:{ 'api_key':'k9mLtN7WCf', 'name': name, 'course': course, 'grade': grade },
+            success: function adsf (response){
+
+                  var new_student_object = {
+                        name: name,
+                        course: course,
+                        grade: grade,
+                        id: response.new_id,
+                  }
+                  student_array.push(new_student_object);
+                  updateStudentList( student_array );
+            },
+            // success: doWhenDataSentAndReturned,
             dataType: 'json',
         };
         $.ajax( ajaxOptions )
+        //debugger
+      //return 11
 }
 /***************************************************************************************************
- * getData - runs after the data is got
- * @param: 
- * @returns 
- */
-function doWhenDataReceived ( response ) {
-}
-/***************************************************************************************************
- * getData - runs after the data is got
+ * doWhenDataReceived - runs after the data is got
  * @param: 
  * @returns 
  */
@@ -233,3 +244,18 @@ function doWhenDataReceived ( response ) {
       // updateStudentList(student_array);
       console.log(student_array);      
 }
+/***************************************************************************************************
+ * doWhenDataSentAndReturned - runs after data is sent
+ * @param: 
+ * @returns 
+ */
+// function doWhenDataSentAndReturned ( response ) {
+//       var new_id = response.new_id;
+
+//             var new_student_object = {
+//             name: $('#studentName').val(),
+//             course: $('#course').val(),
+//             grade: parseFloat($('#studentGrade').val()),
+//             }
+//       console.log('response resonse', response);
+// }

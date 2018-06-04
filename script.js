@@ -29,6 +29,7 @@ var student_array = [];
 */
 function initializeApp(){
       addClickHandlersToElements();
+      getData();
 }
 
 /***************************************************************************************************
@@ -194,16 +195,28 @@ function handleGetDataClicked () {
  * @returns 
  */
 function getData () {
-      console.log('getData');
-
+      console.log('getData()');
       var ajaxOptions = {
             url: 'http://s-apis.learningfuze.com/sgt/get',
-            // 'api_key': 'k9mLtN7WCf',
-            // key: 'api_key',
-            // value: 'k9mLtN7WCf',
             method: 'post',
             data:{'api_key':'k9mLtN7WCf'},
             success: doWhenDataReceived,
+            dataType: 'json',
+        };
+        $.ajax( ajaxOptions )
+}
+/***************************************************************************************************
+ * sendData - send data to server
+ * @param: 
+ * @returns 
+ */
+function sendData () {
+      console.log('sendData()');
+      var ajaxOptions = {
+            url: 'http://s-apis.learningfuze.com/sgt/get',
+            method: 'post',
+            data:{ 'api_key':'k9mLtN7WCf', name:'Me', course:'Being Me', grade: 100 },
+            success: doWhenDataSent,
             dataType: 'json',
         };
         $.ajax( ajaxOptions )
@@ -214,5 +227,15 @@ function getData () {
  * @returns 
  */
 function doWhenDataReceived ( response ) {
+      console.log('doWhenDataReceived()');
+      console.log(response);
+}
+/***************************************************************************************************
+ * getData - runs after the data is got
+ * @param: 
+ * @returns 
+ */
+function doWhenDataReceived ( response ) {
+      console.log('doWhenDataSent()');
       console.log(response);
 }

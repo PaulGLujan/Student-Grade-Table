@@ -195,7 +195,7 @@ function handleGetDataClicked () {
  */
 function getData () {
       var ajaxOptions = {
-            url: '../prototypes_fi_part2/php_SGTserver/data.php',
+            url: 'backend/data.php',
             method: 'GET',
             data:{
                   'api_key':'k9mLtN7WCf',

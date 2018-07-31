@@ -55,7 +55,6 @@ function addClickHandlersToElements(){
        none
  */
 function handleAddClicked( event ){
-      debugger
       addStudent();
 }
 /***************************************************************************************************
@@ -196,9 +195,12 @@ function handleGetDataClicked () {
  */
 function getData () {
       var ajaxOptions = {
-            url: 'http://s-apis.learningfuze.com/sgt/get',
-            method: 'post',
-            data:{'api_key':'k9mLtN7WCf'},
+            url: '../prototypes_fi_part2/php_SGTserver/data.php',
+            method: 'GET',
+            data:{
+                  'api_key':'k9mLtN7WCf',
+                  'action': 'readAll',
+            },
             success: doWhenDataReceived,
             dataType: 'json',
         };
@@ -211,11 +213,17 @@ function getData () {
  */
 function sendData ( name, course, grade ) {
       var ajaxOptions = {
-            url: 'http://s-apis.learningfuze.com/sgt/create',
-            method: 'post',
-            data:{ 'api_key':'k9mLtN7WCf', 'name': name, 'course': course, 'grade': grade },
+            url: '../prototypes_fi_part2/php_SGTserver/data.php',
+            method: 'GET',
+            data:{ 
+                  'api_key':'k9mLtN7WCf', 
+                  'action': 'insert',
+                  'name': name, 
+                  'course': course, 
+                  'grade': grade 
+            },
             success: function adsf (response){
-
+                  console.log(response);
                   var new_student_object = {
                         name: name,
                         course: course,
@@ -244,7 +252,6 @@ function deleteData ( current_index, outer_tr ) {
             method: 'post',
             data:{ 'api_key':'k9mLtN7WCf', 'student_id': student_id },
             success: function (response){
-                  debugger
                   student_array.splice( current_index, 1 );
                   // outer_tr.remove();
 

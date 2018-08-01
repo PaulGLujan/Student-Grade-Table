@@ -46,7 +46,6 @@ function addClickHandlersToElements(){
       //       var jQueryObj = $(this);
       //       deleteData( student_array, jQueryObj );
       // });
-      $('.get_data_button').on('click', handleGetDataClicked);
 }
 
 /***************************************************************************************************
@@ -186,15 +185,6 @@ function calculateGradeAverage ( student_array ){
  */
 function renderGradeAverage(average){
       $('.avgGrade').text(average);
-}
-/***************************************************************************************************
- * handleGetDataClicked - handles clicks on the get_data_button
- * @param: 
- * @returns 
- */
-function handleGetDataClicked () {
-      var jQueryObj = this;
-      getData();
 }
 /***************************************************************************************************
  * getData - pulls data from database using AJAX call

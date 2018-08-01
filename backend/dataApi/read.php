@@ -20,6 +20,9 @@ else {
 		$output['success'] = true;
 		//do a while loop to collect all the data
 		while ( $row = mysqli_fetch_assoc($result) ) {
+			//Casts id and grade as integers
+			$row['id'] = (int) $row['id'];
+			$row['grade'] = (int) $row['grade'];
 			//add each row of data to the $output['data'] array
 			$output['data'][] = $row;
 		}

@@ -39,11 +39,12 @@ function initializeApp(){
 *     
 */
 function addClickHandlersToElements(){
+      //Delete button event listener is in renderStudentOnDom function
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
       // $('.student-list').on('click', '.delete_row', function (){
       //       var jQueryObj = $(this);
-      //       removeStudent( student_array, jQueryObj );
+      //       deleteData( student_array, jQueryObj );
       // });
       $('.get_data_button').on('click', handleGetDataClicked);
 }
@@ -116,24 +117,31 @@ function renderStudentOnDom( studentObj ) {
       var inner_td_button = $('<td>');
       var button = $('<button>', {
             text: 'Delete',
+            'data-id': studentObj.id,
             class: 'btn btn-danger delete_row',
+            on: {
+                  click: function(){
+                        var current_index = studentObj.id;
+                        deleteData( current_index, outer_tr );
+                  } 
+            }
       })
       
       $(inner_td_button).append(button);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 
-      $(button).on('click', function(){
-            var current_index = outer_tr.index();
+      // $('button').on('click', function(){
+      //       var current_index = studentObj.id;
 
-            deleteData( current_index, outer_tr );
+      //       deleteData( current_index, outer_tr );
 
-            // student_array.splice( current_index, 1 );
-            // outer_tr.remove();
+      //       // student_array.splice( current_index, 1 );
+      //       // outer_tr.remove();
             
-            // var average = calculateGradeAverage ( student_array );
-            // renderGradeAverage(average);
-      })
+      //       // var average = calculateGradeAverage ( student_array );
+      //       // renderGradeAverage(average);
+      // })
 }
 /***************************************************************************************************
  * updateStudentList - centralized function to update the average and call student list update
@@ -213,7 +221,7 @@ function getData () {
  */
 function sendData ( name, course, grade ) {
       var ajaxOptions = {
-            url: '../prototypes_fi_part2/php_SGTserver/data.php',
+            url: 'backend/data.php',
             method: 'GET',
             data:{ 
                   'api_key':'k9mLtN7WCf', 
@@ -228,7 +236,7 @@ function sendData ( name, course, grade ) {
                         name: name,
                         course: course,
                         grade: grade,
-                        id: response.new_id,
+                        id: response.insertID,
                   }
                   student_array.push(new_student_object);
                   updateStudentList( student_array );
@@ -246,11 +254,14 @@ function sendData ( name, course, grade ) {
  * @returns 
  */
 function deleteData ( current_index, outer_tr ) {
-      var student_id = student_array[current_index].id;
       var ajaxOptions = {
-            url: 'http://s-apis.learningfuze.com/sgt/delete',
-            method: 'post',
-            data:{ 'api_key':'k9mLtN7WCf', 'student_id': student_id },
+            url: 'backend/data.php',
+            method: 'get',
+            data:{ 
+                  'api_key':'k9mLtN7WCf', 
+                  'action': 'delete',
+                  'student_id': current_index 
+            },
             success: function (response){
                   student_array.splice( current_index, 1 );
                   // outer_tr.remove();

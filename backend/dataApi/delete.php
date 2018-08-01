@@ -10,7 +10,7 @@ if ( empty($_GET['student_id']) ){
 	$query = "DELETE FROM `student_data` WHERE `id`=$student_id";
 	$result = null;
 //send the query to the database, store the result of the query into $result
-	$result = mysqli_query($conn,$query);	
+	$result = mysqli_query($conn,$query);
 //check if $result is empty.  	
 	if ( empty($result) ){
 	//if it is, add 'database error' to errors
@@ -19,7 +19,7 @@ if ( empty($_GET['student_id']) ){
 //else:
 	else { 
 	//check if the number of affected rows is 1
-		if ( mysqli_num_rows($result) === 1 ) {
+		if ($result) {
 		//if it did, change output success to true
 			$output['success'] = true;
 		} 

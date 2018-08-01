@@ -263,7 +263,11 @@ function deleteData ( current_index, outer_tr ) {
                   'student_id': current_index 
             },
             success: function (response){
-                  student_array.splice( current_index, 1 );
+                  for (let i=0; i<student_array.length; i++){
+                        if(student_array[i].id === current_index){
+                              student_array.splice(i, 1);
+                        }
+                  }
                   // outer_tr.remove();
 
                   var average = calculateGradeAverage ( student_array );

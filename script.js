@@ -41,6 +41,9 @@ function initializeApp(){
 function addClickHandlersToElements(){
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
+      $('.student-list').on('click', '.delete_row', function (){
+            console.log('Great balls of fire!');
+      });
       // $('.student-list').on('click', '.delete_row', function (){
       //       var jQueryObj = $(this);
       //       removeStudent( student_array, jQueryObj );

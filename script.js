@@ -41,10 +41,10 @@ function initializeApp(){
 function addClickHandlersToElements(){
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
-      $('.student-list').on('click', '.delete_row', function (){
-            var jQueryObj = $(this);
-            deleteData( student_array, jQueryObj );
-      });
+      // $('.student-list').on('click', '.delete_row', function (){
+      //       var jQueryObj = $(this);
+      //       deleteData( student_array, jQueryObj );
+      // });
       $('.get_data_button').on('click', handleGetDataClicked);
 }
 
@@ -125,7 +125,7 @@ function renderStudentOnDom( studentObj ) {
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 
-      $(button).on('click', function(){
+      $('button').on('click', function(){
             var current_index = outer_tr.index();
 
             deleteData( current_index, outer_tr );

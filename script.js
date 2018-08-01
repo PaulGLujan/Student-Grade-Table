@@ -116,7 +116,9 @@ function renderStudentOnDom( studentObj ) {
       var inner_td_button = $('<td>');
       var button = $('<button>', {
             text: 'Delete',
+            'data-id': studentObj.id,
             class: 'btn btn-danger delete_row',
+
       })
       
       $(inner_td_button).append(button);

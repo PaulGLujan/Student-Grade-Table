@@ -6,7 +6,7 @@ if ( empty($_GET['name']) || empty($_GET['course']) || empty($_GET['grade']) ){
 	$output['errors'][] = 'Need to have name, course, and grade in data.';
 }
 //write a query that inserts the data into the database.  remember that ID doesn't need to be set as it is auto incrementing
-$query = "INSERT INTO `student_data`(`name`, `grade`, `course_name`) VALUES ('{$_GET['name']}','{$_GET['grade']}','{$_GET['course']}')";
+$query = "INSERT INTO `student_data`(`name`, `grade`, `course`) VALUES ('{$_GET['name']}','{$_GET['grade']}','{$_GET['course']}')";
 //$result = null;
 //send the query to the database, store the result of the query into $result
 $result = mysqli_query($conn, $query);

@@ -39,6 +39,7 @@ function initializeApp(){
 *     
 */
 function addClickHandlersToElements(){
+      //Delete button event listener is in renderStudentOnDom function
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
       // $('.student-list').on('click', '.delete_row', function (){
@@ -118,24 +119,29 @@ function renderStudentOnDom( studentObj ) {
             text: 'Delete',
             'data-id': studentObj.id,
             class: 'btn btn-danger delete_row',
-
+            on: {
+                  click: function(){
+                        var current_index = studentObj.id;
+                        deleteData( current_index, outer_tr );
+                  } 
+            }
       })
       
       $(inner_td_button).append(button);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 
-      $('button').on('click', function(){
-            var current_index = outer_tr.index();
+      // $('button').on('click', function(){
+      //       var current_index = studentObj.id;
 
-            deleteData( current_index, outer_tr );
+      //       deleteData( current_index, outer_tr );
 
-            // student_array.splice( current_index, 1 );
-            // outer_tr.remove();
+      //       // student_array.splice( current_index, 1 );
+      //       // outer_tr.remove();
             
-            // var average = calculateGradeAverage ( student_array );
-            // renderGradeAverage(average);
-      })
+      //       // var average = calculateGradeAverage ( student_array );
+      //       // renderGradeAverage(average);
+      // })
 }
 /***************************************************************************************************
  * updateStudentList - centralized function to update the average and call student list update
@@ -248,11 +254,10 @@ function sendData ( name, course, grade ) {
  * @returns 
  */
 function deleteData ( current_index, outer_tr ) {
-      var student_id = student_array[current_index].id;
       var ajaxOptions = {
             url: 'http://s-apis.learningfuze.com/sgt/delete',
             method: 'post',
-            data:{ 'api_key':'k9mLtN7WCf', 'student_id': student_id },
+            data:{ 'api_key':'k9mLtN7WCf', 'student_id': current_index },
             success: function (response){
                   student_array.splice( current_index, 1 );
                   // outer_tr.remove();

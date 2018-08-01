@@ -26,7 +26,7 @@ else {
 		//if it did, change output success to true
 		$output['success'] = true;
 		//get the insert ID of the row that was added
-		$insertID = (string) mysqli_insert_id($conn);
+		$insertID = mysqli_insert_id($conn);
 		//add 'insertID' to $outut and set the value to the row's insert ID
 		$output['insertID'] = $insertID;
 	}

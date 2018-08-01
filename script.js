@@ -255,9 +255,13 @@ function sendData ( name, course, grade ) {
  */
 function deleteData ( current_index, outer_tr ) {
       var ajaxOptions = {
-            url: 'http://s-apis.learningfuze.com/sgt/delete',
-            method: 'post',
-            data:{ 'api_key':'k9mLtN7WCf', 'student_id': current_index },
+            url: 'backend/data.php',
+            method: 'get',
+            data:{ 
+                  'api_key':'k9mLtN7WCf', 
+                  'action': 'delete',
+                  'student_id': current_index 
+            },
             success: function (response){
                   student_array.splice( current_index, 1 );
                   // outer_tr.remove();

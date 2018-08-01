@@ -42,12 +42,9 @@ function addClickHandlersToElements(){
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
       $('.student-list').on('click', '.delete_row', function (){
-            console.log('Great balls of fire!');
+            var jQueryObj = $(this);
+            deleteData( student_array, jQueryObj );
       });
-      // $('.student-list').on('click', '.delete_row', function (){
-      //       var jQueryObj = $(this);
-      //       removeStudent( student_array, jQueryObj );
-      // });
       $('.get_data_button').on('click', handleGetDataClicked);
 }
 

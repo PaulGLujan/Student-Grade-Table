@@ -125,8 +125,18 @@ function renderStudentOnDom( studentObj ) {
                   } 
             }
       })
+      var update_button = $('<button>', {
+            text: 'Update',
+            'data-id': studentObj.id,
+            class: 'btn btn-info',
+            on: {
+                  'click': function(){
+                        console.log('update clicked and fat arrows are dakjf');
+                  }
+            }
+      })
       
-      $(inner_td_button).append(del_button);
+      $(inner_td_button).append(del_button, update_button);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 

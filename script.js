@@ -213,7 +213,7 @@ function getData () {
  */
 function sendData ( name, course, grade ) {
       var ajaxOptions = {
-            url: '../prototypes_fi_part2/php_SGTserver/data.php',
+            url: 'backend/data.php',
             method: 'GET',
             data:{ 
                   'api_key':'k9mLtN7WCf', 
@@ -228,7 +228,7 @@ function sendData ( name, course, grade ) {
                         name: name,
                         course: course,
                         grade: grade,
-                        id: response.new_id,
+                        id: response.insertID,
                   }
                   student_array.push(new_student_object);
                   updateStudentList( student_array );

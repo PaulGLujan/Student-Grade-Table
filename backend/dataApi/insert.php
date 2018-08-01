@@ -7,11 +7,12 @@ if ( empty($_GET['name']) || empty($_GET['course']) || empty($_GET['grade']) ){
 }
 //write a query that inserts the data into the database.  remember that ID doesn't need to be set as it is auto incrementing
 $query = "INSERT INTO `student_data`(`name`, `grade`, `course_name`) VALUES ('{$_GET['name']}','{$_GET['grade']}','{$_GET['course']}')";
-$result = null;
+//$result = null;
 //send the query to the database, store the result of the query into $result
 $result = mysqli_query($conn, $query);
-$row = mysqli_insert_id($result);
-print($row);
+
+// $insertID = mysqli_insert_id($conn);
+// print($row);
 
 //check if $result is empty.  
 if ( empty($result) ){
@@ -21,13 +22,13 @@ if ( empty($result) ){
 //else:
 else { 
 	//check if the number of affected rows is 1
-	if ( $result === 1) {
+	if ($result) {
 		//if it did, change output success to true
 		$output['success'] = true;
 		//get the insert ID of the row that was added
-		$ID = $result['id'];
+		$insertID = (string) mysqli_insert_id($conn);
 		//add 'insertID' to $outut and set the value to the row's insert ID
-		$output['insertID'] = $ID;
+		$output['insertID'] = $insertID;
 	}
 	//if not, add to the errors: 'insert error'
 	else {

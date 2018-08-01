@@ -114,7 +114,7 @@ function renderStudentOnDom( studentObj ) {
             text: studentObj.grade,
       })
       var inner_td_button = $('<td>');
-      var button = $('<button>', {
+      var delButton = $('<button>', {
             text: 'Delete',
             'data-id': studentObj.id,
             class: 'btn btn-danger delete_row',
@@ -126,7 +126,7 @@ function renderStudentOnDom( studentObj ) {
             }
       })
       
-      $(inner_td_button).append(button);
+      $(inner_td_button).append(delButton);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 

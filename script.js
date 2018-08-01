@@ -125,18 +125,20 @@ function renderStudentOnDom( studentObj ) {
                   } 
             }
       })
-      var update_button = $('<button>', {
-            text: 'Update',
+      var edit_button = $('<button>', {
+            text: 'Edit',
             'data-id': studentObj.id,
             class: 'btn btn-info',
             on: {
-                  'click': function(){
-                        console.log('update clicked and fat arrows are dakjf');
+                  click: function(){
+                        console.log('hey hey hey');
+                        var current_index = studentObj.id;
+                        //deleteData( current_index, outer_tr );                  }
                   }
             }
       })
       
-      $(inner_td_button).append(del_button, update_button);
+      $(inner_td_button).append(del_button, edit_button);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 

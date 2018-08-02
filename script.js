@@ -303,6 +303,11 @@ function deleteData ( current_index, outer_tr ) {
 function editMode(){
       console.log('editMode is running right now');
       console.log($(this));
+      var input = $('<input />', {
+            'type': 'text',
+            'value': $(this).text(),
+    });
+    $(this).replaceWith(input);
 }
 
 

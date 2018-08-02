@@ -106,6 +106,9 @@ function renderStudentOnDom( studentObj ) {
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
             text: studentObj.name,
+            on: {
+                  dblclick: editMode
+            }
       });
       var inner_td_course = $('<td>', {
             text: studentObj.course,
@@ -130,11 +133,10 @@ function renderStudentOnDom( studentObj ) {
             'data-id': studentObj.id,
             class: 'btn btn-info',
             on: {
-                  click: function(){
-                        console.log('hey hey hey');
-                        var current_index = studentObj.id;
-                        //deleteData( current_index, outer_tr );                  }
-                  }
+                  // click: function(){
+                  //       var current_index = studentObj.id;
+                  //       editData();
+                  // }
             }
       })
       
@@ -284,6 +286,26 @@ function deleteData ( current_index, outer_tr ) {
         };
         $.ajax( ajaxOptions )
 }
+// /***************************************************************************************************
+//  * editData - edit a row of data 
+//  * @param: id, name, course, grade
+//  * @returns
+//  */
+// function editData(){
+//       console.log('editData is running');
+// }
+
+/***************************************************************************************************
+ * editMode - changes div to input
+ * @param: 
+ * @returns
+ */
+function editMode(){
+      console.log('editMode is running right now');
+      console.log($(this));
+}
+
+
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got
  * @param: 

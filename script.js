@@ -308,21 +308,18 @@ function editMode(){
             'value': $(this).text(),
       });
 
-      var td_element = $('<td>', {
-            text: 'Raisins are delicious!',
-       });
-
       $(this).replaceWith(input);
 
       $(document).keypress(function(event) {
             if(event.which == 13) {
-                  console.log('Enter pressed.')
                   enterEdit();
             }
           });
 
       function enterEdit(){
-            console.log('enterEdit running');
+            var td_element = $('<td>', {
+                  text: 'Raisins are delicious!',
+             });
             input.replaceWith(td_element);
       }
 }

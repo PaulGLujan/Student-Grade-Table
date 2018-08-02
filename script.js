@@ -307,13 +307,19 @@ function deleteData ( current_index, outer_tr ) {
  */
 function editMode(){
       console.log($(this));
+      
       var input = $('<input />', {
             'type': 'text',
             'value': $(this).text(),
             on: {
                   dblclick: editMode,
             }
-    });
+      });
+
+      var td_element = $('<td>', {
+            text: 'Raisins are delicious!',
+       });
+
     $(this).replaceWith(input);
 }
 

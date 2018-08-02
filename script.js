@@ -318,7 +318,7 @@ function editMode(){
 
       function enterEdit(){
             var td_element = $('<td>', {
-                  text: 'Raisins are delicious!',
+                  text: $(input).val(),
              });
             input.replaceWith(td_element);
       }

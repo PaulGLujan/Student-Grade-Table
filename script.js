@@ -46,11 +46,6 @@ function addClickHandlersToElements(){
       //       var jQueryObj = $(this);
       //       deleteData( student_array, jQueryObj );
       // });
-      $(document).keypress(function(e) {
-            if(e.which == 13) {
-                  console.log('Enter pressed.')
-            }
-          });
 }
 
 /***************************************************************************************************
@@ -311,16 +306,25 @@ function editMode(){
       var input = $('<input />', {
             'type': 'text',
             'value': $(this).text(),
-            on: {
-                  dblclick: editMode,
-            }
       });
 
       var td_element = $('<td>', {
             text: 'Raisins are delicious!',
        });
 
-    $(this).replaceWith(input);
+      $(this).replaceWith(input);
+
+      $(document).keypress(function(event) {
+            if(event.which == 13) {
+                  console.log('Enter pressed.')
+                  enterEdit();
+            }
+          });
+
+      function enterEdit(){
+            console.log('enterEdit running');
+            input.replaceWith(td_element);
+      }
 }
 
 /***************************************************************************************************

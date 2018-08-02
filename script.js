@@ -46,6 +46,11 @@ function addClickHandlersToElements(){
       //       var jQueryObj = $(this);
       //       deleteData( student_array, jQueryObj );
       // });
+      $(document).keypress(function(e) {
+            if(e.which == 13) {
+                  console.log('Enter pressed.')
+            }
+          });
 }
 
 /***************************************************************************************************
@@ -301,15 +306,16 @@ function deleteData ( current_index, outer_tr ) {
  * @returns
  */
 function editMode(){
-      console.log('editMode is running right now');
       console.log($(this));
       var input = $('<input />', {
             'type': 'text',
             'value': $(this).text(),
+            on: {
+                  dblclick: editMode,
+            }
     });
     $(this).replaceWith(input);
 }
-
 
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got

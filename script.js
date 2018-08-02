@@ -319,6 +319,9 @@ function editMode(){
       function enterEdit(){
             var td_element = $('<td>', {
                   text: $(input).val(),
+                  on: {
+                        dblclick: editMode
+                  }
              });
             input.replaceWith(td_element);
       }

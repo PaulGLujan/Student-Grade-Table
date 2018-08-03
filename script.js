@@ -106,6 +106,9 @@ function renderStudentOnDom( studentObj ) {
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
             text: studentObj.name,
+            on: {
+                  dblclick: editMode
+            }
       });
       var inner_td_course = $('<td>', {
             text: studentObj.course,
@@ -114,7 +117,7 @@ function renderStudentOnDom( studentObj ) {
             text: studentObj.grade,
       })
       var inner_td_button = $('<td>');
-      var button = $('<button>', {
+      var del_button = $('<button>', {
             text: 'Delete',
             'data-id': studentObj.id,
             class: 'btn btn-danger delete_row',
@@ -125,8 +128,19 @@ function renderStudentOnDom( studentObj ) {
                   } 
             }
       })
+      var edit_button = $('<button>', {
+            text: 'Edit',
+            'data-id': studentObj.id,
+            class: 'btn btn-info',
+            on: {
+                  // click: function(){
+                  //       var current_index = studentObj.id;
+                  //       editData();
+                  // }
+            }
+      })
       
-      $(inner_td_button).append(button);
+      $(inner_td_button).append(del_button, edit_button);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 
@@ -272,6 +286,47 @@ function deleteData ( current_index, outer_tr ) {
         };
         $.ajax( ajaxOptions )
 }
+// /***************************************************************************************************
+//  * editData - edit a row of data 
+//  * @param: id, name, course, grade
+//  * @returns
+//  */
+// function editData(){
+//       console.log('editData is running');
+// }
+
+/***************************************************************************************************
+ * editMode - changes div to input
+ * @param: 
+ * @returns
+ */
+function editMode(){
+      console.log($(this));
+      
+      var input = $('<input />', {
+            'type': 'text',
+            'value': $(this).text(),
+      });
+
+      $(this).replaceWith(input);
+
+      $(document).keypress(function(event) {
+            if(event.which == 13) {
+                  enterEdit();
+            }
+          });
+
+      function enterEdit(){
+            var td_element = $('<td>', {
+                  text: $(input).val(),
+                  on: {
+                        dblclick: editMode
+                  }
+             });
+            input.replaceWith(td_element);
+      }
+}
+
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got
  * @param: 

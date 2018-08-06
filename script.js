@@ -148,10 +148,11 @@ function renderStudentOnDom( studentObj ) {
             
             var input = $('<input />', {
                   'type': 'text',
-                  'value': $(this).text(),
+                  // 'value': $(this).text(),
+                  'value': studentObj.name,
             });
       
-            $(this).replaceWith(input);
+            $(inner_td_name).replaceWith(input);
       
             $(document).keypress(function(event) {
                   if(event.which == 13) {

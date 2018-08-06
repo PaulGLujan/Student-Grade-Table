@@ -139,10 +139,39 @@ function renderStudentOnDom( studentObj ) {
                   // }
             }
       })
+
+
       
       $(inner_td_button).append(del_button, edit_button);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
+
+      function editMode(){
+            console.log($(this));
+            
+            var input = $('<input />', {
+                  'type': 'text',
+                  'value': $(this).text(),
+            });
+      
+            $(this).replaceWith(input);
+      
+            $(document).keypress(function(event) {
+                  if(event.which == 13) {
+                        enterEdit();
+                  }
+                });
+      
+            function enterEdit(){
+                  var td_element = $('<td>', {
+                        text: $(input).val(),
+                        on: {
+                              dblclick: editMode
+                        }
+                   });
+                  input.replaceWith(td_element);
+            }
+      }
 
       // $('button').on('click', function(){
       //       var current_index = studentObj.id;
@@ -300,32 +329,32 @@ function deleteData ( current_index, outer_tr ) {
  * @param: 
  * @returns
  */
-function editMode(){
-      console.log($(this));
+// function editMode(){
+//       console.log($(this));
       
-      var input = $('<input />', {
-            'type': 'text',
-            'value': $(this).text(),
-      });
+//       var input = $('<input />', {
+//             'type': 'text',
+//             'value': $(this).text(),
+//       });
 
-      $(this).replaceWith(input);
+//       $(this).replaceWith(input);
 
-      $(document).keypress(function(event) {
-            if(event.which == 13) {
-                  enterEdit();
-            }
-          });
+//       $(document).keypress(function(event) {
+//             if(event.which == 13) {
+//                   enterEdit();
+//             }
+//           });
 
-      function enterEdit(){
-            var td_element = $('<td>', {
-                  text: $(input).val(),
-                  on: {
-                        dblclick: editMode
-                  }
-             });
-            input.replaceWith(td_element);
-      }
-}
+//       function enterEdit(){
+//             var td_element = $('<td>', {
+//                   text: $(input).val(),
+//                   on: {
+//                         dblclick: editMode
+//                   }
+//              });
+//             input.replaceWith(td_element);
+//       }
+// }
 
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got

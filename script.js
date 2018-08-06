@@ -146,13 +146,27 @@ function renderStudentOnDom( studentObj ) {
       function editMode(){
             console.log($(this));
             
-            var input = $('<input />', {
+            var nameInput = $('<input />', {
                   'type': 'text',
                   // 'value': $(this).text(),
                   'value': studentObj.name,
             });
+
+            var courseInput = $('<input />', {
+                  'type': 'text',
+                  // 'value': $(this).text(),
+                  'value': studentObj.course,
+            });
+
+            var gradeInput = $('<input />', {
+                  'type': 'text',
+                  // 'value': $(this).text(),
+                  'value': studentObj.grade,
+            });
       
-            $(inner_td_name).replaceWith(input);
+            $(inner_td_name).replaceWith(nameInput);
+            $(inner_td_course).replaceWith(courseInput);
+            $(inner_td_grade).replaceWith(gradeInput);
       
             $(document).keypress(function(event) {
                   if(event.which == 13) {
@@ -162,12 +176,12 @@ function renderStudentOnDom( studentObj ) {
       
             function enterEdit(){
                   var td_element = $('<td>', {
-                        text: $(input).val(),
-                        on: {
-                              dblclick: editMode
-                        }
+                        text: $(nameInput).val(),
+                        // on: {
+                        //       dblclick: editMode
+                        // }
                    });
-                  input.replaceWith(td_element);
+                  nameInput.replaceWith(td_element);
             }
       }
 

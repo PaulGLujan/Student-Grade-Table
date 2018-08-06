@@ -106,9 +106,9 @@ function renderStudentOnDom( studentObj ) {
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
             text: studentObj.name,
-            on: {
-                  dblclick: editMode
-            }
+            // on: {
+            //       dblclick: editMode
+            // }
       });
       var inner_td_course = $('<td>', {
             text: studentObj.course,
@@ -133,10 +133,7 @@ function renderStudentOnDom( studentObj ) {
             'data-id': studentObj.id,
             class: 'btn btn-info',
             on: {
-                  // click: function(){
-                  //       var current_index = studentObj.id;
-                  //       editData();
-                  // }
+                  click: editMode
             }
       })
 

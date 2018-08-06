@@ -181,7 +181,15 @@ function renderStudentOnDom( studentObj ) {
                         //       dblclick: editMode
                         // }
                    });
-                  nameInput.replaceWith(td_element);
+                  // nameInput.replaceWith(td_element);
+                  nameInput.replaceWith(inner_td_name);
+                  $(inner_td_name).text($(nameInput).val());
+
+                  courseInput.replaceWith(inner_td_course);
+                  $(inner_td_course).text($(courseInput).val());
+
+                  gradeInput.replaceWith(inner_td_grade);
+                  $(inner_td_grade).text($(gradeInput).val());
             }
       }
 

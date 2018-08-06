@@ -145,7 +145,7 @@ function renderStudentOnDom( studentObj ) {
 
       function editMode(){
             console.log($(this));
-            
+      
             var nameInput = $('<input />', {
                   'type': 'text',
                   // 'value': $(this).text(),
@@ -164,7 +164,9 @@ function renderStudentOnDom( studentObj ) {
                   'value': studentObj.grade,
             });
       
-            $(inner_td_name).replaceWith(nameInput);
+            // $(inner_td_name).replaceWith(nameInput);
+            $(inner_td_name).text('');
+            $(inner_td_name).append(nameInput);
             $(inner_td_course).replaceWith(courseInput);
             $(inner_td_grade).replaceWith(gradeInput);
       
@@ -174,7 +176,7 @@ function renderStudentOnDom( studentObj ) {
                   }
                 });
       
-            function enterEdit(){
+            function enterEdit(name, course, grade){
                   var td_element = $('<td>', {
                         text: $(nameInput).val(),
                         // on: {
@@ -182,7 +184,10 @@ function renderStudentOnDom( studentObj ) {
                         // }
                    });
                   // nameInput.replaceWith(td_element);
-                  nameInput.replaceWith(inner_td_name);
+                  // nameInput.replaceWith(inner_td_name);
+                  // $(inner_td_name).text($(nameInput).val());
+                  // $(nameInput).remove();
+                  $(nameInput).css({'display':'none'});
                   $(inner_td_name).text($(nameInput).val());
 
                   courseInput.replaceWith(inner_td_course);

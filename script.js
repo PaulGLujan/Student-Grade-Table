@@ -102,113 +102,125 @@ function clearAddStudentFormInputs(){
  * @param {object} studentObj a single student object with course, name, and grade inside
  */
 function renderStudentOnDom( studentObj ) {
+      const id = studentObj.id;
+      let name = studentObj.name;
+      let course = studentObj.course;
+      let grade = studentObj.grade;
       
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
-            text: studentObj.name,
-            // on: {
-            //       dblclick: editMode
-            // }
+            text: name,
       });
       var inner_td_course = $('<td>', {
-            text: studentObj.course,
+            text: course,
       });
       var inner_td_grade = $('<td>', {
-            text: studentObj.grade,
+            text: grade,
       })
       var inner_td_button = $('<td>');
       var del_button = $('<button>', {
             text: 'Delete',
-            'data-id': studentObj.id,
+            'data-id': id,
             class: 'btn btn-danger delete_row',
             on: {
                   click: function(){
-                        var current_index = studentObj.id;
-                        deleteData( current_index, outer_tr );
+                        deleteData( id, outer_tr );
                   } 
             }
       })
-      var edit_button = $('<button>', {
+      var edit_button_initial = $('<button>', {
             text: 'Edit',
-            'data-id': studentObj.id,
             class: 'btn btn-info',
             on: {
                   click: editMode
             }
       })
+      var edit_button_edit_mode = $('<button>', {
+            text: 'Edit',
+            class: 'btn btn-primary',
+            on: {
+                  click: sendUpdate
+            }
+      })
+      var nameInput = $('<input />', {
+            'type': 'text',
+            'value': name,
+      });
 
+      var courseInput = $('<input />', {
+            'type': 'text',
+            'value': course,
+      });
 
-      
-      $(inner_td_button).append(del_button, edit_button);
+      var gradeInput = $('<input />', {
+            'type': 'text',
+            'value': grade,
+      });
+
+      $(inner_td_button).append(del_button, edit_button_initial);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
-            console.log($(this));
-      
-            var nameInput = $('<input />', {
-                  'type': 'text',
-                  // 'value': $(this).text(),
-                  'value': studentObj.name,
-            });
-
-            var courseInput = $('<input />', {
-                  'type': 'text',
-                  // 'value': $(this).text(),
-                  'value': studentObj.course,
-            });
-
-            var gradeInput = $('<input />', {
-                  'type': 'text',
-                  // 'value': $(this).text(),
-                  'value': studentObj.grade,
-            });
-      
-            // $(inner_td_name).replaceWith(nameInput);
+            console.log('editMode');
             $(inner_td_name).text('');
+            $(inner_td_course).text('');
+            $(inner_td_grade).text('');
+
             $(inner_td_name).append(nameInput);
-            $(inner_td_course).replaceWith(courseInput);
-            $(inner_td_grade).replaceWith(gradeInput);
+            $(inner_td_course).append(courseInput);
+            $(inner_td_grade).append(gradeInput);
       
-            $(document).keypress(function(event) {
-                  if(event.which == 13) {
-                        enterEdit();
-                  }
-                });
-      
-            function enterEdit(name, course, grade){
-                  var td_element = $('<td>', {
-                        text: $(nameInput).val(),
-                        // on: {
-                        //       dblclick: editMode
-                        // }
-                   });
-                  // nameInput.replaceWith(td_element);
-                  // nameInput.replaceWith(inner_td_name);
-                  // $(inner_td_name).text($(nameInput).val());
-                  // $(nameInput).remove();
-                  $(nameInput).css({'display':'none'});
-                  $(inner_td_name).text($(nameInput).val());
+            $(edit_button_initial).replaceWith(edit_button_edit_mode);
 
-                  courseInput.replaceWith(inner_td_course);
-                  $(inner_td_course).text($(courseInput).val());
-
-                  gradeInput.replaceWith(inner_td_grade);
-                  $(inner_td_grade).text($(gradeInput).val());
-            }
+            $(outer_tr).addClass('bg-warning');
       }
 
-      // $('button').on('click', function(){
-      //       var current_index = studentObj.id;
+      function sendUpdate(){
+            var ajaxOptions = {
+                  url: 'backend/data.php',
+                  method: 'GET',
+                  data:{
+                        'action': 'update',
+                        'student_id': id,
+                        'name': $(nameInput).val(),
+                        'course': $(courseInput).val(),
+                        'grade': $(gradeInput).val(),                  
+                  },
+                  success: function(response){
+                        console.log(response.success);
+                        if(response.success){
+                              console.log('call successful');
+                              name = $(nameInput).val();
+                              course = $(courseInput).val();
+                              grade = parseInt($(gradeInput).val());
+                              exitEditMode();
+                        }
+                  },
+                  dataType: 'json',
+            };
+            $.ajax( ajaxOptions )
+      }
+      
+      function exitEditMode(){
+            $(inner_td_name).text(name);
+            $(inner_td_course).text(course);
+            $(inner_td_grade).text(grade);
 
-      //       deleteData( current_index, outer_tr );
+            console.log('edit button initial', edit_button_initial);
+            $(edit_button_edit_mode).replaceWith(edit_button_initial);
+            $(outer_tr).removeClass('bg-warning');
 
-      //       // student_array.splice( current_index, 1 );
-      //       // outer_tr.remove();
-            
-      //       // var average = calculateGradeAverage ( student_array );
-      //       // renderGradeAverage(average);
-      // })
+            for(let i=0; i<student_array.length; i++){
+                  if(student_array[i].id === id){
+                        student_array[i].name = name;
+                        student_array[i].course = course;
+                        student_array[i].grade = grade;
+                  }
+            }
+            var average = calculateGradeAverage ( student_array );
+            renderGradeAverage(average);
+      }
 }
 /***************************************************************************************************
  * updateStudentList - centralized function to update the average and call student list update

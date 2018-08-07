@@ -138,9 +138,6 @@ function renderStudentOnDom( studentObj ) {
       var edit_button_edit_mode = $('<button>', {
             text: 'Edit',
             class: 'btn btn-primary',
-            on: {
-                  click: sendUpdate
-            }
       })
       var nameInput = $('<input />', {
             'type': 'text',
@@ -173,6 +170,8 @@ function renderStudentOnDom( studentObj ) {
       
             $(edit_button_initial).replaceWith(edit_button_edit_mode);
 
+            $(edit_button_edit_mode).on('click', sendUpdate);
+
             $(outer_tr).addClass('bg-warning');
       }
 
@@ -201,8 +200,9 @@ function renderStudentOnDom( studentObj ) {
             };
             $.ajax( ajaxOptions )
       }
-      
       function exitEditMode(){
+            $(edit_button_initial).on('click', editMode);
+
             $(inner_td_name).text(name);
             $(inner_td_course).text(course);
             $(inner_td_grade).text(grade);

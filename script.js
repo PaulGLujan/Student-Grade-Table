@@ -140,16 +140,19 @@ function renderStudentOnDom( studentObj ) {
             class: 'btn btn-primary',
       })
       var nameInput = $('<input />', {
+            'class': 'tableInput',
             'type': 'text',
             'value': name,
       });
 
       var courseInput = $('<input />', {
+            'class': 'tableInput',
             'type': 'text',
             'value': course,
       });
 
       var gradeInput = $('<input />', {
+            'class': 'tableInput',
             'type': 'text',
             'value': grade,
       });

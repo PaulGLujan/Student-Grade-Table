@@ -135,9 +135,9 @@ function renderStudentOnDom( studentObj ) {
                   click: editMode
             }
       })
-      var edit_button_edit_mode = $('<button>', {
-            text: 'Edit',
-            class: 'btn btn-primary',
+      var save_button = $('<button>', {
+            text: 'Save',
+            class: 'btn btn-success',
       })
       var nameInput = $('<input />', {
             'class': 'tableInput',
@@ -162,7 +162,7 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
-            console.log('editMode');
+            console.log('editMode ran');
             $(inner_td_name).text('');
             $(inner_td_course).text('');
             $(inner_td_grade).text('');
@@ -171,11 +171,32 @@ function renderStudentOnDom( studentObj ) {
             $(inner_td_course).append(courseInput);
             $(inner_td_grade).append(gradeInput);
       
-            $(edit_button_initial).replaceWith(edit_button_edit_mode);
+            $(edit_button_initial).replaceWith(save_button);
 
-            $(edit_button_edit_mode).on('click', sendUpdate);
+            $(save_button).on('click', sendUpdate);
 
             $(outer_tr).addClass('bg-warning');
+            
+            console.log('save button:', $(edit_button_initial))
+
+            function exit_edit_on_general_dom_click (e) {
+                  if(!$(e.target).is($(edit_button_initial))
+                        &&!$(e.target).is($(save_button))
+                  ) {
+                        console.log('event handler', $(e.target));
+                        exitEditMode.call(this)
+                  }
+            }
+
+            $(document).on('click', function(e) {
+                  // console.log('event handler', $(e.target));
+                  if(!$(e.target).is($(edit_button_initial))
+                  &&!$(e.target).is($(save_button))
+            ) {
+                  console.log('event handler', $(e.target));
+                        exitEditMode.call(this)
+                  }
+                }.bind(this));
       }
 
       function sendUpdate(){
@@ -190,9 +211,7 @@ function renderStudentOnDom( studentObj ) {
                         'grade': $(gradeInput).val(),                  
                   },
                   success: function(response){
-                        console.log(response.success);
                         if(response.success){
-                              console.log('call successful');
                               name = $(nameInput).val();
                               course = $(courseInput).val();
                               grade = parseInt($(gradeInput).val());
@@ -203,15 +222,19 @@ function renderStudentOnDom( studentObj ) {
             };
             $.ajax( ajaxOptions )
       }
+
       function exitEditMode(){
+
+            $(document).off('click');
+
+            console.log('exitEditMode()', this);
             $(edit_button_initial).on('click', editMode);
 
             $(inner_td_name).text(name);
             $(inner_td_course).text(course);
             $(inner_td_grade).text(grade);
 
-            console.log('edit button initial', edit_button_initial);
-            $(edit_button_edit_mode).replaceWith(edit_button_initial);
+            $(save_button).replaceWith(edit_button_initial);
             $(outer_tr).removeClass('bg-warning');
 
             for(let i=0; i<student_array.length; i++){
@@ -409,7 +432,7 @@ function doWhenDataReceived ( response ) {
             updateStudentList(student_array);
       }
       // updateStudentList(student_array);
-      console.log(student_array);      
+      console.log('student array:', student_array);      
 }
 /***************************************************************************************************
  * doWhenDataSentAndReturned - runs after data is sent

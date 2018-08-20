@@ -11,6 +11,7 @@ $(document).ready(initializeApp);
  * Define all global variables here.  
  */
 var student_array = [];
+var edit_mode = false;
 /***********************
  * student_array - global array to hold student objects
  * @type {Array}
@@ -162,7 +163,9 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
-            console.log('editMode ran');
+            edit_mode = true;
+
+            console.log('editMode on');
             $(inner_td_name).text('');
             $(inner_td_course).text('');
             $(inner_td_grade).text('');
@@ -176,24 +179,11 @@ function renderStudentOnDom( studentObj ) {
             $(save_button).on('click', sendUpdate);
 
             $(outer_tr).addClass('bg-warning');
-            
-            console.log('save button:', $(edit_button_initial))
-
-            function exit_edit_on_general_dom_click (e) {
-                  if(!$(e.target).is($(edit_button_initial))
-                        &&!$(e.target).is($(save_button))
-                  ) {
-                        console.log('event handler', $(e.target));
-                        exitEditMode.call(this)
-                  }
-            }
 
             $(document).on('click', function(e) {
-                  // console.log('event handler', $(e.target));
                   if(!$(e.target).is($(edit_button_initial))
                   &&!$(e.target).is($(save_button))
             ) {
-                  console.log('event handler', $(e.target));
                         exitEditMode.call(this)
                   }
                 }.bind(this));
@@ -227,14 +217,15 @@ function renderStudentOnDom( studentObj ) {
 
             $(document).off('click');
 
-            console.log('exitEditMode()', this);
             $(edit_button_initial).on('click', editMode);
 
             $(inner_td_name).text(name);
             $(inner_td_course).text(course);
             $(inner_td_grade).text(grade);
 
-            $(save_button).replaceWith(edit_button_initial);
+            //$(save_button).replaceWith(edit_button_initial);
+            $(save_button).remove();
+            $(inner_td_button).append(edit_button_initial);
             $(outer_tr).removeClass('bg-warning');
 
             for(let i=0; i<student_array.length; i++){
@@ -246,6 +237,9 @@ function renderStudentOnDom( studentObj ) {
             }
             var average = calculateGradeAverage ( student_array );
             renderGradeAverage(average);
+
+            edit_mode = false;
+            console.log('editMode off')
       }
 }
 /***************************************************************************************************
@@ -327,7 +321,6 @@ function sendData ( name, course, grade ) {
                   'grade': grade 
             },
             success: function adsf (response){
-                  console.log(response);
                   var new_student_object = {
                         name: name,
                         course: course,
@@ -371,7 +364,6 @@ function deleteData ( current_index, outer_tr ) {
                   outer_tr.remove();
             },
             error: function(){
-                  console.log(response);
             },
             // success: doWhenDataSentAndReturned,
             dataType: 'json',

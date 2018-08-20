@@ -163,8 +163,11 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
+            if(edit_clicked){
+                  return
+            }
 
-            console.log('editMode on');
+            edit_clicked = true;
             $(inner_td_name).text('');
             $(inner_td_course).text('');
             $(inner_td_grade).text('');
@@ -237,7 +240,7 @@ function renderStudentOnDom( studentObj ) {
             var average = calculateGradeAverage ( student_array );
             renderGradeAverage(average);
 
-            console.log('editMode off')
+            edit_clicked = false;
       }
 }
 /***************************************************************************************************

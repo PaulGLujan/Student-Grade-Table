@@ -11,7 +11,7 @@ $(document).ready(initializeApp);
  * Define all global variables here.  
  */
 var student_array = [];
-var edit_mode = false;
+var edit_clicked = false;
 /***********************
  * student_array - global array to hold student objects
  * @type {Array}
@@ -163,7 +163,6 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
-            edit_mode = true;
 
             console.log('editMode on');
             $(inner_td_name).text('');
@@ -238,7 +237,6 @@ function renderStudentOnDom( studentObj ) {
             var average = calculateGradeAverage ( student_array );
             renderGradeAverage(average);
 
-            edit_mode = false;
             console.log('editMode off')
       }
 }

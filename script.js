@@ -173,6 +173,10 @@ function renderStudentOnDom( studentObj ) {
             $(inner_td_course).text('');
             $(inner_td_grade).text('');
 
+            $(nameInput).val(name);
+            $(courseInput).val(course);
+            $(gradeInput).val(grade);
+
             $(inner_td_name).append(nameInput);
             $(inner_td_course).append(courseInput);
             $(inner_td_grade).append(gradeInput);

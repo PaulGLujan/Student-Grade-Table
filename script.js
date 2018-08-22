@@ -11,6 +11,7 @@ $(document).ready(initializeApp);
  * Define all global variables here.  
  */
 var student_array = [];
+var edit_clicked = false;
 /***********************
  * student_array - global array to hold student objects
  * @type {Array}
@@ -42,10 +43,11 @@ function addClickHandlersToElements(){
       //Delete button event listener is in renderStudentOnDom function
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
-      // $('.student-list').on('click', '.delete_row', function (){
-      //       var jQueryObj = $(this);
-      //       deleteData( student_array, jQueryObj );
-      // });
+      $(document).keypress(function(e) {
+            if(e.which == 13) {
+                handleAddClicked();
+            }
+        });
 }
 
 /***************************************************************************************************
@@ -102,59 +104,155 @@ function clearAddStudentFormInputs(){
  * @param {object} studentObj a single student object with course, name, and grade inside
  */
 function renderStudentOnDom( studentObj ) {
+      const id = studentObj.id;
+      let name = studentObj.name;
+      let course = studentObj.course;
+      let grade = studentObj.grade;
       
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
-            text: studentObj.name,
-            on: {
-                  dblclick: editMode
-            }
+            text: name,
       });
       var inner_td_course = $('<td>', {
-            text: studentObj.course,
+            text: course,
       });
       var inner_td_grade = $('<td>', {
-            text: studentObj.grade,
+            text: grade,
       })
       var inner_td_button = $('<td>');
       var del_button = $('<button>', {
             text: 'Delete',
-            'data-id': studentObj.id,
+            'data-id': id,
             class: 'btn btn-danger delete_row',
             on: {
                   click: function(){
-                        var current_index = studentObj.id;
-                        deleteData( current_index, outer_tr );
+                        deleteData( id, outer_tr );
                   } 
             }
       })
-      var edit_button = $('<button>', {
+      var edit_button_initial = $('<button>', {
             text: 'Edit',
-            'data-id': studentObj.id,
             class: 'btn btn-info',
             on: {
-                  // click: function(){
-                  //       var current_index = studentObj.id;
-                  //       editData();
-                  // }
+                  click: editMode
             }
       })
-      
-      $(inner_td_button).append(del_button, edit_button);
+      var save_button = $('<button>', {
+            text: 'Save',
+            class: 'btn btn-success',
+      })
+      var nameInput = $('<input />', {
+            'class': 'tableInput',
+            'type': 'text',
+            'value': name,
+      });
+
+      var courseInput = $('<input />', {
+            'class': 'tableInput',
+            'type': 'text',
+            'value': course,
+      });
+
+      var gradeInput = $('<input />', {
+            'class': 'tableInput',
+            'type': 'text',
+            'value': grade,
+      });
+
+      $(inner_td_button).append(del_button, edit_button_initial);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
 
-      // $('button').on('click', function(){
-      //       var current_index = studentObj.id;
+      function editMode(){
+            if(edit_clicked){
+                  return
+            }
 
-      //       deleteData( current_index, outer_tr );
+            edit_clicked = true;
+            $(inner_td_name).text('');
+            $(inner_td_course).text('');
+            $(inner_td_grade).text('');
 
-      //       // student_array.splice( current_index, 1 );
-      //       // outer_tr.remove();
-            
-      //       // var average = calculateGradeAverage ( student_array );
-      //       // renderGradeAverage(average);
-      // })
+            $(inner_td_name).append(nameInput);
+            $(inner_td_course).append(courseInput);
+            $(inner_td_grade).append(gradeInput);
+      
+            $(edit_button_initial).replaceWith(save_button);
+
+            $(save_button).on('click', sendUpdate);
+
+            $(outer_tr).addClass('bg-warning');
+
+            $(document).on('click', function(e) {
+                  if(!$(e.target).is($(edit_button_initial))
+                  &&!$(e.target).is($(save_button))
+                  &&!$(e.target).is($(nameInput))
+                  &&!$(e.target).is($(courseInput))
+                  &&!$(e.target).is($(gradeInput))
+            ) {
+                        exitEditMode.call(this)
+                  }
+                }.bind(this));
+
+            $(document).keypress(function(e) {
+                  if(e.which == 13) {
+                        sendUpdate();
+                  }
+            });
+
+      }
+
+      function sendUpdate(){
+            var ajaxOptions = {
+                  url: 'backend/data.php',
+                  method: 'GET',
+                  data:{
+                        'action': 'update',
+                        'student_id': id,
+                        'name': $(nameInput).val(),
+                        'course': $(courseInput).val(),
+                        'grade': $(gradeInput).val(),                  
+                  },
+                  success: function(response){
+                        if(response.success){
+                              name = $(nameInput).val();
+                              course = $(courseInput).val();
+                              grade = parseInt($(gradeInput).val());
+                              exitEditMode();
+                        }
+                  },
+                  dataType: 'json',
+            };
+            $.ajax( ajaxOptions )
+      }
+
+      function exitEditMode(){
+
+            $(document).off('click');
+
+            $(edit_button_initial).on('click', editMode);
+
+            $(inner_td_name).text(name);
+            $(inner_td_course).text(course);
+            $(inner_td_grade).text(grade);
+
+            //$(save_button).replaceWith(edit_button_initial);
+            $(save_button).remove();
+            $(inner_td_button).append(edit_button_initial);
+            $(outer_tr).removeClass('bg-warning');
+
+            for(let i=0; i<student_array.length; i++){
+                  if(student_array[i].id === id){
+                        student_array[i].name = name;
+                        student_array[i].course = course;
+                        student_array[i].grade = grade;
+                  }
+            }
+            var average = calculateGradeAverage ( student_array );
+            renderGradeAverage(average);
+
+            edit_clicked = false;
+      }
 }
 /***************************************************************************************************
  * updateStudentList - centralized function to update the average and call student list update
@@ -235,7 +333,6 @@ function sendData ( name, course, grade ) {
                   'grade': grade 
             },
             success: function adsf (response){
-                  console.log(response);
                   var new_student_object = {
                         name: name,
                         course: course,
@@ -279,7 +376,6 @@ function deleteData ( current_index, outer_tr ) {
                   outer_tr.remove();
             },
             error: function(){
-                  console.log(response);
             },
             // success: doWhenDataSentAndReturned,
             dataType: 'json',
@@ -300,32 +396,32 @@ function deleteData ( current_index, outer_tr ) {
  * @param: 
  * @returns
  */
-function editMode(){
-      console.log($(this));
+// function editMode(){
+//       console.log($(this));
       
-      var input = $('<input />', {
-            'type': 'text',
-            'value': $(this).text(),
-      });
+//       var input = $('<input />', {
+//             'type': 'text',
+//             'value': $(this).text(),
+//       });
 
-      $(this).replaceWith(input);
+//       $(this).replaceWith(input);
 
-      $(document).keypress(function(event) {
-            if(event.which == 13) {
-                  enterEdit();
-            }
-          });
+//       $(document).keypress(function(event) {
+//             if(event.which == 13) {
+//                   enterEdit();
+//             }
+//           });
 
-      function enterEdit(){
-            var td_element = $('<td>', {
-                  text: $(input).val(),
-                  on: {
-                        dblclick: editMode
-                  }
-             });
-            input.replaceWith(td_element);
-      }
-}
+//       function enterEdit(){
+//             var td_element = $('<td>', {
+//                   text: $(input).val(),
+//                   on: {
+//                         dblclick: editMode
+//                   }
+//              });
+//             input.replaceWith(td_element);
+//       }
+// }
 
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got
@@ -340,7 +436,7 @@ function doWhenDataReceived ( response ) {
             updateStudentList(student_array);
       }
       // updateStudentList(student_array);
-      console.log(student_array);      
+      console.log('student array:', student_array);      
 }
 /***************************************************************************************************
  * doWhenDataSentAndReturned - runs after data is sent

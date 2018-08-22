@@ -43,10 +43,11 @@ function addClickHandlersToElements(){
       //Delete button event listener is in renderStudentOnDom function
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
-      // $('.student-list').on('click', '.delete_row', function (){
-      //       var jQueryObj = $(this);
-      //       deleteData( student_array, jQueryObj );
-      // });
+      $(document).keypress(function(e) {
+            if(e.which == 13) {
+                handleAddClicked();
+            }
+        });
 }
 
 /***************************************************************************************************
@@ -185,10 +186,20 @@ function renderStudentOnDom( studentObj ) {
             $(document).on('click', function(e) {
                   if(!$(e.target).is($(edit_button_initial))
                   &&!$(e.target).is($(save_button))
+                  &&!$(e.target).is($(nameInput))
+                  &&!$(e.target).is($(courseInput))
+                  &&!$(e.target).is($(gradeInput))
             ) {
                         exitEditMode.call(this)
                   }
                 }.bind(this));
+
+            $(document).keypress(function(e) {
+                  if(e.which == 13) {
+                        sendUpdate();
+                  }
+            });
+
       }
 
       function sendUpdate(){

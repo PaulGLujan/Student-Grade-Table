@@ -5,8 +5,6 @@ includes HTML structure that will need to be updated with boostrap classes. For 
 understand how to style an application with bootstrap, take input values and apply them to objects, and update the DOM
 with a visual of those objects stored.
 
-
-
 ## Getting Started
 # Version 2.0
 
@@ -127,9 +125,3 @@ from the DOM only after we have successfully removed the object from the array.
                 - 'server': force a server failure (error 500).  Server will not respond with ANY data except the error code (as opposed to 200 / 304).
                 - 'request': the request failed.  This mimics any number of errors, from deleting a student that doesn't exist, to trying to add a student when you don't have access, to the database being offline.
                 - 'timeout': force the request to take 10 seconds.  No answer will be given for 10 seconds.  At that time, the normal operation will occur.
-            
-        
-
-
-
-    

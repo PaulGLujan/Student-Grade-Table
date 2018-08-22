@@ -78,9 +78,13 @@ function addStudent(){
       var name = $('#studentName').val();
       var course = $('#course').val();
       var grade = parseFloat($('#studentGrade').val());
-      clearAddStudentFormInputs();
 
-      sendData ( name, course, grade );
+      if(name!=''&&course!=''&&grade!=''){
+            clearAddStudentFormInputs();
+
+            sendData ( name, course, grade );
+      }
+
       // var new_student_object = {
       //       name: $('#studentName').val(),
       //       course: $('#course').val(),
@@ -155,7 +159,7 @@ function renderStudentOnDom( studentObj ) {
 
       var gradeInput = $('<input />', {
             'class': 'tableInput',
-            'type': 'text',
+            'type': 'number',
             'value': grade,
       });
 

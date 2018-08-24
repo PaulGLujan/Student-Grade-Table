@@ -48,6 +48,7 @@ function addClickHandlersToElements(){
                 handleAddClicked();
             }
         });
+      $('.form-control').on('input', highlightInput);
 }
 
 /***************************************************************************************************
@@ -461,3 +462,21 @@ function doWhenDataReceived ( response ) {
 //             }
 //       console.log('response resonse', response);
 // }
+/***************************************************************************************************
+ * highlightInput -
+ * @param: 
+ * @returns 
+ */
+function highlightInput(){
+      let input_text = $(this).val();
+      if (input_text===''){
+            console.log('blank val');
+            $(this).closest('div').addClass('has-warning');
+            $(this).closest('div').removeClass('has-success');
+      }
+      else if(input_text!==''){
+            console.log('text here');
+            $(this).closest('div').addClass('has-success');
+            $(this).closest('div').removeClass('has-warning');
+      }
+}

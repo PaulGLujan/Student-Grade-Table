@@ -59,7 +59,6 @@ function addClickHandlersToElements(){
  */
 function handleAddClicked( event ){
       validateAddStudent();
-      addStudent();
 }
 /***************************************************************************************************
  * handleCancelClicked - Event Handler when user clicks the cancel button, should clear out student form
@@ -86,15 +85,6 @@ function addStudent(){
 
             sendData ( name, course, grade );
       }
-
-      // var new_student_object = {
-      //       name: $('#studentName').val(),
-      //       course: $('#course').val(),
-      //       grade: parseFloat($('#studentGrade').val()),
-      // }
-      // student_array.push(new_student_object);
-
-      // updateStudentList( student_array );
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
@@ -103,6 +93,10 @@ function clearAddStudentFormInputs(){
       $('#studentName').val('');
       $('#course').val('');
       $('#studentGrade').val('');
+
+      $('#studentName').closest('div').removeClass('has-success');
+      $('#course').closest('div').removeClass('has-success');
+      $('#studentGrade').closest('div').removeClass('has-success');
 }
 /***************************************************************************************************
  * renderStudentOnDom - take in a student object, create html elements from the values and then append the elements
@@ -491,6 +485,8 @@ function highlightTextInput(){
  * @returns 
  */
 function validateAddStudent(){
+      let validate = 0;
+
       $('.errorMessage').remove();
 
       if($('#studentName').val()===''){
@@ -499,6 +495,7 @@ function validateAddStudent(){
       else if($('#studentName').val().length>40){
             $('<p class="text-danger errorMessage">&#9702 Must not exceed 40 characters.</p>').insertAfter('#nameInputGroup');
       }
+      else{validate+=1}
 
       if($('#course').val()===''){
             $('<p class="text-danger errorMessage">&#9702 Course name required.</p>').insertAfter('#courseInputGroup');
@@ -506,6 +503,7 @@ function validateAddStudent(){
       else if($('#course').val().length>40){
             $('<p class="text-danger errorMessage">&#9702 Must not exceed 40 characters.</p>').insertAfter('#courseInputGroup');
       }
+      else{validate+=1}
 
       if($('#studentGrade').val()===''){
             $('<p class="text-danger errorMessage">&#9702 Student grade required.</p>').insertAfter('#gradeInputGroup');
@@ -515,5 +513,10 @@ function validateAddStudent(){
       }
       else if($('#studentGrade').val()<0){
             $('<p class="text-danger errorMessage">&#9702 Student grade cannot be negative.</p>').insertAfter('#gradeInputGroup');
+      }
+      else{validate+=1}
+
+      if(validate===3){
+            addStudent();
       }
 }

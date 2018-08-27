@@ -471,12 +471,12 @@ function highlightInput(){
       let input_text = $(this).val();
       if (input_text===''){
             console.log('blank val');
-            $(this).closest('div').addClass('has-warning');
+            $(this).closest('div').addClass('has-error');
             $(this).closest('div').removeClass('has-success');
       }
       else if(input_text!==''){
             console.log('text here');
             $(this).closest('div').addClass('has-success');
-            $(this).closest('div').removeClass('has-warning');
+            $(this).closest('div').removeClass('has-error');
       }
 }

@@ -488,12 +488,16 @@ function highlightTextInput(){
  */
 function validateAddStudent(){
       if($('#studentName').val()===''){
-            console.log('empty name');
+            $('<p class="text-danger">&#9702 Student name required.</p>').insertAfter('#nameInputGroup');
       }
+      else if($('#studentName').val().length>40){
+            $('<p class="text-danger">&#9702 Must not exceed 40 characters.</p>').insertAfter('#nameInputGroup');
+      }
+
       if($('#course').val()===''){
-            console.log('empty course');
+            $('<p class="text-danger">&#9702 Course name required.</p>').insertAfter('#courseInputGroup');
       }
-      if($('#studentGrade').val()===''){
-            console.log('empty grade');
+      else if($('#course').val().length>40){
+            $('<p class="text-danger">&#9702 Must not exceed 40 characters.</p>').insertAfter('#courseInputGroup');
       }
 }

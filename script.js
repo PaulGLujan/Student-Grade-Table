@@ -471,7 +471,11 @@ function doWhenDataReceived ( response ) {
  */
 function highlightTextInput(){
       let input_text = $(this).val();
-      if (input_text==='' || input_text.length>40){
+      if (input_text===''||input_text.length>40){
+            $(this).closest('div').addClass('has-error');
+            $(this).closest('div').removeClass('has-success');
+      }
+      else if ($(this).is('#studentGrade')&&(input_text<0||input_text>100)){
             $(this).closest('div').addClass('has-error');
             $(this).closest('div').removeClass('has-success');
       }
@@ -487,24 +491,29 @@ function highlightTextInput(){
  * @returns 
  */
 function validateAddStudent(){
+      $('.errorMessage').remove();
+
       if($('#studentName').val()===''){
-            $('<p class="text-danger">&#9702 Student name required.</p>').insertAfter('#nameInputGroup');
+            $('<p class="text-danger errorMessage">&#9702 Student name required.</p>').insertAfter('#nameInputGroup');
       }
       else if($('#studentName').val().length>40){
-            $('<p class="text-danger">&#9702 Must not exceed 40 characters.</p>').insertAfter('#nameInputGroup');
+            $('<p class="text-danger errorMessage">&#9702 Must not exceed 40 characters.</p>').insertAfter('#nameInputGroup');
       }
 
       if($('#course').val()===''){
-            $('<p class="text-danger">&#9702 Course name required.</p>').insertAfter('#courseInputGroup');
+            $('<p class="text-danger errorMessage">&#9702 Course name required.</p>').insertAfter('#courseInputGroup');
       }
       else if($('#course').val().length>40){
-            $('<p class="text-danger">&#9702 Must not exceed 40 characters.</p>').insertAfter('#courseInputGroup');
+            $('<p class="text-danger errorMessage">&#9702 Must not exceed 40 characters.</p>').insertAfter('#courseInputGroup');
       }
 
       if($('#studentGrade').val()===''){
-            $('<p class="text-danger">&#9702 Student grade required.</p>').insertAfter('#gradeInputGroup');
+            $('<p class="text-danger errorMessage">&#9702 Student grade required.</p>').insertAfter('#gradeInputGroup');
       }
       else if($('#studentGrade').val()>100){
-            $('<p class="text-danger">&#9702 Student grade must not exceed 100.</p>').insertAfter('#gradeInputGroup');
+            $('<p class="text-danger errorMessage">&#9702 Student grade must not exceed 100.</p>').insertAfter('#gradeInputGroup');
+      }
+      else if($('#studentGrade').val()<0){
+            $('<p class="text-danger errorMessage">&#9702 Student grade cannot be negative.</p>').insertAfter('#gradeInputGroup');
       }
 }

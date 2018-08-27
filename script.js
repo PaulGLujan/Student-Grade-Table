@@ -48,7 +48,7 @@ function addClickHandlersToElements(){
                 handleAddClicked();
             }
         });
-      $('.form-control').on('input', highlightInput);
+      $('.form-control').on('input', highlightTextInput);
 }
 
 /***************************************************************************************************
@@ -58,6 +58,7 @@ function addClickHandlersToElements(){
        none
  */
 function handleAddClicked( event ){
+      validateAddStudent();
       addStudent();
 }
 /***************************************************************************************************
@@ -463,20 +464,36 @@ function doWhenDataReceived ( response ) {
 //       console.log('response resonse', response);
 // }
 /***************************************************************************************************
- * highlightInput -
+ * highlightText
+ *Input -
  * @param: 
  * @returns 
  */
-function highlightInput(){
+function highlightTextInput(){
       let input_text = $(this).val();
-      if (input_text===''){
-            console.log('blank val');
+      if (input_text==='' || input_text.length>40){
             $(this).closest('div').addClass('has-error');
             $(this).closest('div').removeClass('has-success');
       }
       else if(input_text!==''){
-            console.log('text here');
             $(this).closest('div').addClass('has-success');
             $(this).closest('div').removeClass('has-error');
+      }
+}
+/***************************************************************************************************
+ * validateAddStudent - 
+ *Input -
+ * @param: 
+ * @returns 
+ */
+function validateAddStudent(){
+      if($('#studentName').val()===''){
+            console.log('empty name');
+      }
+      if($('#course').val()===''){
+            console.log('empty course');
+      }
+      if($('#studentGrade').val()===''){
+            console.log('empty grade');
       }
 }

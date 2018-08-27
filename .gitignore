@@ -2,3 +2,4 @@
 .idea
 README.md
 mysql_connect.php
+mysql_default_db_connect.php

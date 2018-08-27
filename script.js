@@ -500,4 +500,11 @@ function validateAddStudent(){
       else if($('#course').val().length>40){
             $('<p class="text-danger">&#9702 Must not exceed 40 characters.</p>').insertAfter('#courseInputGroup');
       }
+
+      if($('#studentGrade').val()===''){
+            $('<p class="text-danger">&#9702 Student grade required.</p>').insertAfter('#gradeInputGroup');
+      }
+      else if($('#studentGrade').val()>100){
+            $('<p class="text-danger">&#9702 Student grade must not exceed 100.</p>').insertAfter('#gradeInputGroup');
+      }
 }

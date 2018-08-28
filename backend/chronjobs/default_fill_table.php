@@ -1,16 +1,23 @@
 <?php
 require '../mysql_connect.php';
 require 'mysql_default_db_connect.php';
+if($conn){
+    print("Conn is connected <br>");
+}
+if($conn_default_db){
+    print("Conn_default_db is connected <br>");
+}
 
 $query = "DELETE FROM `student_data` WHERE 1";
 $result = mysqli_query($conn, $query);
+print("Delete query ran: $result");
 
 
 $query = "SELECT * FROM `student_data` WHERE 1";
 $result = mysqli_query($conn_default_db, $query);
 
 if (empty($result)) {
-	$output['errors'][] = 'database error';
+	print('database error');
 } else {
 	if ($result) {
         $rows=[];

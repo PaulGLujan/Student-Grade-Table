@@ -476,6 +476,10 @@ function highlightTextInput(){
       else if(input_text!==''){
             $(this).closest('div').addClass('has-success');
             $(this).closest('div').removeClass('has-error');
+            let warning_text = $(this).closest('div').next();
+            if(warning_text.hasClass('text-danger')){
+                  warning_text.remove();
+            }
       }
 }
 /***************************************************************************************************

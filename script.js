@@ -125,9 +125,7 @@ function renderStudentOnDom( studentObj ) {
             'data-id': id,
             class: 'btn btn-danger delete_row',
             on: {
-                  click: function(){
-                        deleteData( id, outer_tr );
-                  } 
+                  click: addErrorConfirmationBar,
             }
       })
       var edit_button_initial = $('<button>', {
@@ -256,6 +254,29 @@ function renderStudentOnDom( studentObj ) {
             renderGradeAverage(average);
 
             edit_clicked = false;
+      }
+
+      function addErrorConfirmationBar(){
+            var confirmation_outer_tr = $('<tr>');
+            var inner_td_message = $('<td>', {
+                  text: 'Are you sure?',
+            });
+            var no_button = $('<button>', {
+                  text: 'Non',
+                  class: 'btn btn-info',
+            })
+            var yes_button = $('<button>', {
+                  text: 'Oui',
+                  class: 'btn btn-warning',
+                  on: {
+                        click: function(){
+                              deleteData( id, outer_tr );
+                        } 
+                  }
+            })
+         
+            $(confirmation_outer_tr).append(inner_td_message, no_button, yes_button);
+            $(outer_tr).after(confirmation_outer_tr);
       }
 }
 /***************************************************************************************************

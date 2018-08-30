@@ -163,15 +163,18 @@ function renderStudentOnDom( studentObj ) {
             text: 'Are you sure?',
       });
 
+      var empty_td1 = $('<td>');
+      var empty_td2 = $('<td>');
+
       var confirmation_td_buttons = $('<td>');
 
       var no_button = $('<button>', {
-            text: 'Non',
+            text: 'No',
             class: 'btn btn-info',
       })
 
       var yes_button = $('<button>', {
-            text: 'Oui',
+            text: 'Yes',
             class: 'btn btn-warning',
       })
 
@@ -299,8 +302,6 @@ function renderStudentOnDom( studentObj ) {
             del_button.off();
             
             //Assemble elements and append to DOM
-            var empty_td1 = $('<td>');
-            var empty_td2 = $('<td>');
             $(confirmation_td_buttons).append(no_button, yes_button);
             $(confirmation_outer_tr).append(empty_td1, empty_td2, inner_td_message, confirmation_td_buttons);
             $(outer_tr).after(confirmation_outer_tr);

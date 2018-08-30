@@ -279,6 +279,15 @@ function renderStudentOnDom( studentObj ) {
                   exitDeleteMode();
             });
 
+            $(document).on('click', function(e) {
+                  if(!$(e.target).is($(no_button))
+                  &&!$(e.target).is($(yes_button))
+                  &&!$(e.target).is($(del_button))
+            ) {
+                        exitDeleteMode.call(this)
+                  }
+                }.bind(this));
+
             $(confirmation_outer_tr).append(inner_td_message, no_button, yes_button);
             $(outer_tr).after(confirmation_outer_tr);
       }

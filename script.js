@@ -163,6 +163,8 @@ function renderStudentOnDom( studentObj ) {
             text: 'Are you sure?',
       });
 
+      var confirmation_td_buttons = $('<td>');
+
       var no_button = $('<button>', {
             text: 'Non',
             class: 'btn btn-info',
@@ -288,7 +290,8 @@ function renderStudentOnDom( studentObj ) {
                   }
                 }.bind(this));
 
-            $(confirmation_outer_tr).append(inner_td_message, no_button, yes_button);
+            $(confirmation_td_buttons).append(no_button, yes_button);
+            $(confirmation_outer_tr).append(inner_td_message, confirmation_td_buttons);
             $(outer_tr).after(confirmation_outer_tr);
       }
       

@@ -304,7 +304,9 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
+            confirmation_outer_tr.empty();
             confirmation_outer_tr.remove();
+            outer_tr.removeClass('bg-danger');
       }
 }
 /***************************************************************************************************

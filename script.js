@@ -275,6 +275,9 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
+            var empty_td1 = $('<td>');
+            var empty_td2 = $('<td>');
+
             no_button.click(exitDeleteMode);
             yes_button.click(function(){
                   deleteData( id, outer_tr );
@@ -291,7 +294,7 @@ function renderStudentOnDom( studentObj ) {
                 }.bind(this));
 
             $(confirmation_td_buttons).append(no_button, yes_button);
-            $(confirmation_outer_tr).append(inner_td_message, confirmation_td_buttons);
+            $(confirmation_outer_tr).append(empty_td1, empty_td2, inner_td_message, confirmation_td_buttons);
             $(outer_tr).after(confirmation_outer_tr);
       }
       

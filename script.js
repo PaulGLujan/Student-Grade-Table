@@ -157,6 +157,27 @@ function renderStudentOnDom( studentObj ) {
             'value': grade,
       });
 
+      var confirmation_outer_tr = $('<tr>');
+
+      var inner_td_message = $('<td>', {
+            text: 'Are you sure?',
+      });
+
+      var no_button = $('<button>', {
+            text: 'Non',
+            class: 'btn btn-info',
+      })
+
+      var yes_button = $('<button>', {
+            text: 'Oui',
+            class: 'btn btn-warning',
+            on: {
+                  click: function(){
+                        deleteData( id, outer_tr );
+                  } 
+            }
+      })
+
       $(inner_td_button).append(del_button, edit_button_initial);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
@@ -257,26 +278,14 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
-            var confirmation_outer_tr = $('<tr>');
-            var inner_td_message = $('<td>', {
-                  text: 'Are you sure?',
-            });
-            var no_button = $('<button>', {
-                  text: 'Non',
-                  class: 'btn btn-info',
-            })
-            var yes_button = $('<button>', {
-                  text: 'Oui',
-                  class: 'btn btn-warning',
-                  on: {
-                        click: function(){
-                              deleteData( id, outer_tr );
-                        } 
-                  }
-            })
-         
+            no_button.click(exitDeleteMode);
+
             $(confirmation_outer_tr).append(inner_td_message, no_button, yes_button);
             $(outer_tr).after(confirmation_outer_tr);
+      }
+      
+      function exitDeleteMode(){
+            confirmation_outer_tr.remove();
       }
 }
 /***************************************************************************************************

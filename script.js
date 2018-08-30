@@ -148,12 +148,14 @@ function renderStudentOnDom( studentObj ) {
             'class': 'tableInput',
             'type': 'text',
             'value': name,
+            size: 12,
       });
 
       var courseInput = $('<input />', {
             'class': 'tableInput',
             'type': 'text',
             'value': course,
+            size: 12,
       });
 
       var gradeInput = $('<input />', {

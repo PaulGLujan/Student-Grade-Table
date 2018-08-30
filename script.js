@@ -112,14 +112,19 @@ function renderStudentOnDom( studentObj ) {
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
             text: name,
+            class: 'col-xs-3',
       });
       var inner_td_course = $('<td>', {
             text: course,
+            class: 'col-xs-3',
       });
       var inner_td_grade = $('<td>', {
             text: grade,
-      })
-      var inner_td_button = $('<td>');
+            class: 'col-xs-2',
+      });
+      var inner_td_button = $('<td>', {
+            class: 'col-xs-4',
+      });
       var del_button = $('<button>', {
             text: 'Delete',
             'data-id': id,
@@ -143,18 +148,23 @@ function renderStudentOnDom( studentObj ) {
             'class': 'tableInput',
             'type': 'text',
             'value': name,
+            size: 12,
       });
 
       var courseInput = $('<input />', {
             'class': 'tableInput',
             'type': 'text',
             'value': course,
+            size: 12,
       });
 
       var gradeInput = $('<input />', {
             'class': 'tableInput',
             'type': 'number',
             'value': grade,
+            'style': "width: 3em",
+            'min': 0,
+            'max': 100,
       });
 
       var confirmation_outer_tr = $('<tr>');

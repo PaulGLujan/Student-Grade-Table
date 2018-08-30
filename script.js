@@ -125,9 +125,7 @@ function renderStudentOnDom( studentObj ) {
             'data-id': id,
             class: 'btn btn-danger delete_row',
             on: {
-                  click: function(){
-                        deleteData( id, outer_tr );
-                  } 
+                  click: addErrorConfirmationBar,
             }
       })
       var edit_button_initial = $('<button>', {
@@ -158,6 +156,27 @@ function renderStudentOnDom( studentObj ) {
             'type': 'number',
             'value': grade,
       });
+
+      var confirmation_outer_tr = $('<tr>');
+
+      var inner_td_message = $('<td>', {
+            text: 'Are you sure?',
+      });
+
+      var empty_td1 = $('<td>');
+      var empty_td2 = $('<td>');
+
+      var confirmation_td_buttons = $('<td>');
+
+      var no_button = $('<button>', {
+            text: 'No',
+            class: 'btn btn-info',
+      })
+
+      var yes_button = $('<button>', {
+            text: 'Yes',
+            class: 'btn btn-warning',
+      })
 
       $(inner_td_button).append(del_button, edit_button_initial);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
@@ -256,6 +275,46 @@ function renderStudentOnDom( studentObj ) {
             renderGradeAverage(average);
 
             edit_clicked = false;
+      }
+
+      function addErrorConfirmationBar(){
+            //Adds event handlers to yes and no buttons
+            no_button.click(exitDeleteMode);
+            yes_button.click(function(){
+                  deleteData( id, outer_tr );
+                  exitDeleteMode();
+            });
+
+            //Color the student row
+            outer_tr.addClass('bg-danger');
+
+            //Adds an event handler so user can click outside dom area to exit delete mode
+            $(document).on('click', function(e) {
+                  if(!$(e.target).is($(no_button))
+                  &&!$(e.target).is($(yes_button))
+                  &&!$(e.target).is($(del_button))
+            ) {
+                        exitDeleteMode.call(this)
+                  }
+                }.bind(this));
+            
+            //Turn off delete button
+            del_button.off();
+            
+            //Assemble elements and append to DOM
+            $(confirmation_td_buttons).append(no_button, yes_button);
+            $(confirmation_outer_tr).append(empty_td1, empty_td2, inner_td_message, confirmation_td_buttons);
+            $(outer_tr).after(confirmation_outer_tr);
+      }
+      
+      function exitDeleteMode(){
+            //Remove confirmation elements and color highlight
+            confirmation_outer_tr.empty();
+            confirmation_outer_tr.remove();
+            outer_tr.removeClass('bg-danger');
+
+            //Reassigns click handler to delete button
+            del_button.click(addErrorConfirmationBar);
       }
 }
 /***************************************************************************************************

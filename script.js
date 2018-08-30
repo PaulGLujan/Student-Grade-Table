@@ -112,14 +112,19 @@ function renderStudentOnDom( studentObj ) {
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
             text: name,
+            class: 'col-xs-4',
       });
       var inner_td_course = $('<td>', {
             text: course,
+            class: 'col-xs-4',
       });
       var inner_td_grade = $('<td>', {
             text: grade,
-      })
-      var inner_td_button = $('<td>');
+            class: 'col-xs-1',
+      });
+      var inner_td_button = $('<td>', {
+            class: 'col-xs-3',
+      });
       var del_button = $('<button>', {
             text: 'Delete',
             'data-id': id,

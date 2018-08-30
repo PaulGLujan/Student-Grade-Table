@@ -275,15 +275,17 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
-            var empty_td1 = $('<td>');
-            var empty_td2 = $('<td>');
-
+            //Adds event handlers to yes and no buttons
             no_button.click(exitDeleteMode);
             yes_button.click(function(){
                   deleteData( id, outer_tr );
                   exitDeleteMode();
             });
 
+            //Color the student row
+            outer_tr.addClass('bg-danger');
+
+            //Adds an event handler so user can click outside dom area to exit delete mode
             $(document).on('click', function(e) {
                   if(!$(e.target).is($(no_button))
                   &&!$(e.target).is($(yes_button))
@@ -292,7 +294,10 @@ function renderStudentOnDom( studentObj ) {
                         exitDeleteMode.call(this)
                   }
                 }.bind(this));
-
+            
+            //Assemble elements and append to DOM
+            var empty_td1 = $('<td>');
+            var empty_td2 = $('<td>');
             $(confirmation_td_buttons).append(no_button, yes_button);
             $(confirmation_outer_tr).append(empty_td1, empty_td2, inner_td_message, confirmation_td_buttons);
             $(outer_tr).after(confirmation_outer_tr);

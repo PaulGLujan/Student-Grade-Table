@@ -160,6 +160,9 @@ function renderStudentOnDom( studentObj ) {
             'class': 'tableInput',
             'type': 'number',
             'value': grade,
+            'style': "width: 7em",
+            'min': 0,
+            'max': 100,
       });
 
       var confirmation_outer_tr = $('<tr>');

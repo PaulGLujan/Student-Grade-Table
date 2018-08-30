@@ -171,11 +171,6 @@ function renderStudentOnDom( studentObj ) {
       var yes_button = $('<button>', {
             text: 'Oui',
             class: 'btn btn-warning',
-            on: {
-                  click: function(){
-                        deleteData( id, outer_tr );
-                  } 
-            }
       })
 
       $(inner_td_button).append(del_button, edit_button_initial);
@@ -279,6 +274,9 @@ function renderStudentOnDom( studentObj ) {
 
       function addErrorConfirmationBar(){
             no_button.click(exitDeleteMode);
+            yes_button.click(function(){
+                  deleteData( id, outer_tr );
+            });
 
             $(confirmation_outer_tr).append(inner_td_message, no_button, yes_button);
             $(outer_tr).after(confirmation_outer_tr);

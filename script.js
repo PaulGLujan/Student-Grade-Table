@@ -295,6 +295,9 @@ function renderStudentOnDom( studentObj ) {
                   }
                 }.bind(this));
             
+            //Turn off delete button
+            del_button.off();
+            
             //Assemble elements and append to DOM
             var empty_td1 = $('<td>');
             var empty_td2 = $('<td>');
@@ -304,9 +307,13 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
+            //Remove confirmation elements and color highlight
             confirmation_outer_tr.empty();
             confirmation_outer_tr.remove();
             outer_tr.removeClass('bg-danger');
+
+            //Reassigns click handler to delete button
+            del_button.click(addErrorConfirmationBar);
       }
 }
 /***************************************************************************************************

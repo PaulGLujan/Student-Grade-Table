@@ -276,6 +276,7 @@ function renderStudentOnDom( studentObj ) {
             no_button.click(exitDeleteMode);
             yes_button.click(function(){
                   deleteData( id, outer_tr );
+                  exitDeleteMode();
             });
 
             $(confirmation_outer_tr).append(inner_td_message, no_button, yes_button);

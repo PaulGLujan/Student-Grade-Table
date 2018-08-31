@@ -192,7 +192,9 @@ function renderStudentOnDom( studentObj ) {
             nameInput.attr('size', 8);
             courseInput.attr('size', 8);
             del_button.html('<i class="fas fa-trash-alt"></i>');  
-            edit_button_initial.html('<i class="fas fa-edit"></i>');       
+            edit_button_initial.html('<i class="fas fa-edit"></i>'); 
+            yes_button.html('<i class="fas fa-check"></i>');  
+            no_button.html('<i class="fa fa-ban" aria-hidden="true"></i>');    
       }
 
       $(inner_td_button).append(del_button, edit_button_initial);

@@ -301,7 +301,11 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
+            if(edit_clicked){
+                  return
+            }
             //Adds event handlers to yes and no buttons
+            edit_clicked = true;
             no_button.click(exitDeleteMode);
             yes_button.click(function(){
                   deleteData( id, outer_tr );
@@ -339,6 +343,8 @@ function renderStudentOnDom( studentObj ) {
 
             //Reassigns click handler to delete button
             del_button.click(addErrorConfirmationBar);
+
+            edit_clicked = false;
       }
 
       function addIconsForMobile(){

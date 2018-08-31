@@ -44,11 +44,14 @@ function addClickHandlersToElements(){
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
       $(document).keypress(function(e) {
-            if(e.which == 13) {
-                handleAddClicked();
+            if(!edit_clicked){
+                  if(e.which == 13) {
+                        handleAddClicked();
+                  }
             }
         });
       $('.form-control').on('input', highlightTextInput);
+      $('.student-list-container').on('click', removeErrorMessages);
 }
 
 /***************************************************************************************************
@@ -298,7 +301,11 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
+            if(edit_clicked){
+                  return
+            }
             //Adds event handlers to yes and no buttons
+            edit_clicked = true;
             no_button.click(exitDeleteMode);
             yes_button.click(function(){
                   deleteData( id, outer_tr );
@@ -336,10 +343,11 @@ function renderStudentOnDom( studentObj ) {
 
             //Reassigns click handler to delete button
             del_button.click(addErrorConfirmationBar);
+
+            edit_clicked = false;
       }
 
       function addIconsForMobile(){
-            console.log('addIconsForMobile', $(window).width());
             if($(window).width()<475){
                   nameInput.attr('size', 8);
                   courseInput.attr('size', 8);
@@ -485,46 +493,6 @@ function deleteData ( current_index, outer_tr ) {
         };
         $.ajax( ajaxOptions )
 }
-// /***************************************************************************************************
-//  * editData - edit a row of data 
-//  * @param: id, name, course, grade
-//  * @returns
-//  */
-// function editData(){
-//       console.log('editData is running');
-// }
-
-/***************************************************************************************************
- * editMode - changes div to input
- * @param: 
- * @returns
- */
-// function editMode(){
-//       console.log($(this));
-      
-//       var input = $('<input />', {
-//             'type': 'text',
-//             'value': $(this).text(),
-//       });
-
-//       $(this).replaceWith(input);
-
-//       $(document).keypress(function(event) {
-//             if(event.which == 13) {
-//                   enterEdit();
-//             }
-//           });
-
-//       function enterEdit(){
-//             var td_element = $('<td>', {
-//                   text: $(input).val(),
-//                   on: {
-//                         dblclick: editMode
-//                   }
-//              });
-//             input.replaceWith(td_element);
-//       }
-// }
 
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got
@@ -538,24 +506,8 @@ function doWhenDataReceived ( response ) {
             student_array.push(currentStudent)
             updateStudentList(student_array);
       }
-      // updateStudentList(student_array);
-      console.log('student array:', student_array);      
 }
-/***************************************************************************************************
- * doWhenDataSentAndReturned - runs after data is sent
- * @param: 
- * @returns 
- */
-// function doWhenDataSentAndReturned ( response ) {
-//       var new_id = response.new_id;
 
-//             var new_student_object = {
-//             name: $('#studentName').val(),
-//             course: $('#course').val(),
-//             grade: parseFloat($('#studentGrade').val()),
-//             }
-//       console.log('response resonse', response);
-// }
 /***************************************************************************************************
  * highlightText
  *Input -
@@ -623,3 +575,28 @@ function validateAddStudent(){
             addStudent();
       }
 }
+
+/***************************************************************************************************
+ * removeErrorMessages - 
+ *Input -
+ * @param: 
+ * @returns 
+ */
+ function removeErrorMessages(){
+       if( $('#studentName').val()===''
+            && $('#course').val()===''
+            && $('#studentGrade').val()==='')
+            {
+      $('.errorMessage').remove();
+      }
+ }
+
+/***************************************************************************************************
+ * removeErrorMessages - 
+ *Input -
+ * @param: 
+ * @returns 
+ */
+ function setTwoNumberDecimal(inputBar) {
+      inputBar.value = parseFloat(inputBar.value).toFixed(2);
+  };

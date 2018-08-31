@@ -1,8 +1,13 @@
 td {
     word-break:break-all;
 }
+
 @media all and (max-width: 475px) {
     td {
         font-size: 11px;
     }
+}
+
+.gap {
+    height: 5vh;
 }

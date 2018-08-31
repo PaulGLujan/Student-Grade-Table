@@ -43,11 +43,12 @@
                 <span class="glyphicon glyphicon-education"></span>
             </span>
             <input type="number" class="form-control" name="studentGrade" id="studentGrade"
-                   placeholder="Student Grade">
+                   placeholder="Student Grade" onchange="setTwoNumberDecimal(this)" min=0 max=100>
         </div>
         <button type="button" class="add_button btn btn-success" onclick="">Add</button>
         <button type="button" class="cancel_button btn btn-default" onclick="">Cancel</button>
     </div>
+    <div class='gap col-xs-12 hidden-sm hidden-md hidden-lg'></div>
     <div class="student-list-container container col-xs-12 col-sm-9">
         <table class="student-list table">
             <thead>

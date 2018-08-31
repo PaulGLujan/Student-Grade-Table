@@ -6,6 +6,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="script.js"></script>
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
     <title>Student Grade Table</title>
@@ -42,19 +43,19 @@
                 <span class="glyphicon glyphicon-education"></span>
             </span>
             <input type="number" class="form-control" name="studentGrade" id="studentGrade"
-                   placeholder="Student Grade">
+                   placeholder="Student Grade" onchange="setTwoNumberDecimal(this)" min=0 max=100>
         </div>
-        <p class="text-info">&#9702 Student grade must be a number.</p>
         <button type="button" class="add_button btn btn-success" onclick="">Add</button>
         <button type="button" class="cancel_button btn btn-default" onclick="">Cancel</button>
     </div>
+    <div class='gap col-xs-12 hidden-sm hidden-md hidden-lg'></div>
     <div class="student-list-container container col-xs-12 col-sm-9">
         <table class="student-list table">
             <thead>
             <tr>
                 <th>Student Name</th>
                 <th>Student Course</th>
-                <th>Student Grade</th>
+                <th>Grade</th>
                 <th>Operations</th>
             </tr>
             </thead>

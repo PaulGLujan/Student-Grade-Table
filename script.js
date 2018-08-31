@@ -44,11 +44,14 @@ function addClickHandlersToElements(){
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
       $(document).keypress(function(e) {
-            if(e.which == 13) {
-                handleAddClicked();
+            if(!edit_clicked){
+                  if(e.which == 13) {
+                        handleAddClicked();
+                  }
             }
         });
       $('.form-control').on('input', highlightTextInput);
+      $('.student-list-container').on('click', removeErrorMessages);
 }
 
 /***************************************************************************************************
@@ -112,22 +115,25 @@ function renderStudentOnDom( studentObj ) {
       var outer_tr = $('<tr>');
       var inner_td_name = $('<td>', {
             text: name,
+            class: 'col-xs-3',
       });
       var inner_td_course = $('<td>', {
             text: course,
+            class: 'col-xs-3',
       });
       var inner_td_grade = $('<td>', {
             text: grade,
-      })
-      var inner_td_button = $('<td>');
+            class: 'col-xs-2',
+      });
+      var inner_td_button = $('<td>', {
+            class: 'col-xs-4',
+      });
       var del_button = $('<button>', {
             text: 'Delete',
             'data-id': id,
             class: 'btn btn-danger delete_row',
             on: {
-                  click: function(){
-                        deleteData( id, outer_tr );
-                  } 
+                  click: addErrorConfirmationBar,
             }
       })
       var edit_button_initial = $('<button>', {
@@ -145,19 +151,49 @@ function renderStudentOnDom( studentObj ) {
             'class': 'tableInput',
             'type': 'text',
             'value': name,
+            size: 12,
       });
 
       var courseInput = $('<input />', {
             'class': 'tableInput',
             'type': 'text',
             'value': course,
+            size: 12,
       });
 
       var gradeInput = $('<input />', {
             'class': 'tableInput',
             'type': 'number',
             'value': grade,
+            'style': "width: 3em",
+            'min': 0,
+            'max': 100,
       });
+
+      var confirmation_outer_tr = $('<tr>');
+
+      var inner_td_message = $('<td>', {
+            text: 'Are you sure?',
+            class: "text-right",
+            'colspan': 2,
+      });
+
+      var empty_td1 = $('<td>');
+
+      var confirmation_td_buttons = $('<td>');
+
+      var no_button = $('<button>', {
+            text: 'No',
+            class: 'btn btn-info',
+      })
+
+      var yes_button = $('<button>', {
+            text: 'Yes',
+            class: 'btn btn-warning',
+      })
+
+      addIconsForMobile();
+      $(window).resize(addIconsForMobile);
 
       $(inner_td_button).append(del_button, edit_button_initial);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
@@ -166,6 +202,11 @@ function renderStudentOnDom( studentObj ) {
       function editMode(){
             if(edit_clicked){
                   return
+            }
+            if($(window).width()<475){
+                  save_button.html('<i class="far fa-save"></i>');   
+            } else {
+                  save_button.html('Save');   
             }
 
             edit_clicked = true;
@@ -193,6 +234,7 @@ function renderStudentOnDom( studentObj ) {
                   &&!$(e.target).is($(nameInput))
                   &&!$(e.target).is($(courseInput))
                   &&!$(e.target).is($(gradeInput))
+                  &&!$(e.target).is('i.fas.fa-edit')
             ) {
                         exitEditMode.call(this)
                   }
@@ -256,6 +298,71 @@ function renderStudentOnDom( studentObj ) {
             renderGradeAverage(average);
 
             edit_clicked = false;
+      }
+
+      function addErrorConfirmationBar(){
+            if(edit_clicked){
+                  return
+            }
+            //Adds event handlers to yes and no buttons
+            edit_clicked = true;
+            no_button.click(exitDeleteMode);
+            yes_button.click(function(){
+                  deleteData( id, outer_tr );
+                  exitDeleteMode();
+            });
+
+            //Color the student row
+            outer_tr.addClass('bg-danger');
+
+            //Adds an event handler so user can click outside dom area to exit delete mode
+            $(document).on('click', function(e) {
+                  if(!$(e.target).is($(no_button))
+                  &&!$(e.target).is($(yes_button))
+                  &&!$(e.target).is($(del_button))
+                  &&!$(e.target).is('i.fas.fa-trash-alt')
+            ) {
+                        exitDeleteMode.call(this)
+                  }
+                }.bind(this));
+            
+            //Turn off delete button
+            del_button.off();
+            
+            //Assemble elements and append to DOM
+            $(confirmation_td_buttons).append(no_button, yes_button);
+            $(confirmation_outer_tr).append(empty_td1, inner_td_message, confirmation_td_buttons);
+            $(outer_tr).after(confirmation_outer_tr);
+      }
+      
+      function exitDeleteMode(){
+            //Remove confirmation elements and color highlight
+            confirmation_outer_tr.empty();
+            confirmation_outer_tr.remove();
+            outer_tr.removeClass('bg-danger');
+
+            //Reassigns click handler to delete button
+            del_button.click(addErrorConfirmationBar);
+
+            edit_clicked = false;
+      }
+
+      function addIconsForMobile(){
+            if($(window).width()<475){
+                  nameInput.attr('size', 8);
+                  courseInput.attr('size', 8);
+                  del_button.html('<i class="fas fa-trash-alt"></i>');  
+                  edit_button_initial.html('<i class="fas fa-edit"></i>'); 
+                  yes_button.html('<i class="fas fa-check"></i>');  
+                  no_button.html('<i class="fa fa-ban" aria-hidden="true"></i>');    
+            } else {
+                  nameInput.attr('size', 12);
+                  courseInput.attr('size', 12);
+                  del_button.html('Delete');  
+                  edit_button_initial.html('Edit'); 
+                  yes_button.html('Yes');  
+                  no_button.html('No'); 
+            }
       }
 }
 /***************************************************************************************************
@@ -386,46 +493,6 @@ function deleteData ( current_index, outer_tr ) {
         };
         $.ajax( ajaxOptions )
 }
-// /***************************************************************************************************
-//  * editData - edit a row of data 
-//  * @param: id, name, course, grade
-//  * @returns
-//  */
-// function editData(){
-//       console.log('editData is running');
-// }
-
-/***************************************************************************************************
- * editMode - changes div to input
- * @param: 
- * @returns
- */
-// function editMode(){
-//       console.log($(this));
-      
-//       var input = $('<input />', {
-//             'type': 'text',
-//             'value': $(this).text(),
-//       });
-
-//       $(this).replaceWith(input);
-
-//       $(document).keypress(function(event) {
-//             if(event.which == 13) {
-//                   enterEdit();
-//             }
-//           });
-
-//       function enterEdit(){
-//             var td_element = $('<td>', {
-//                   text: $(input).val(),
-//                   on: {
-//                         dblclick: editMode
-//                   }
-//              });
-//             input.replaceWith(td_element);
-//       }
-// }
 
 /***************************************************************************************************
  * doWhenDataReceived - runs after the data is got
@@ -439,24 +506,8 @@ function doWhenDataReceived ( response ) {
             student_array.push(currentStudent)
             updateStudentList(student_array);
       }
-      // updateStudentList(student_array);
-      console.log('student array:', student_array);      
 }
-/***************************************************************************************************
- * doWhenDataSentAndReturned - runs after data is sent
- * @param: 
- * @returns 
- */
-// function doWhenDataSentAndReturned ( response ) {
-//       var new_id = response.new_id;
 
-//             var new_student_object = {
-//             name: $('#studentName').val(),
-//             course: $('#course').val(),
-//             grade: parseFloat($('#studentGrade').val()),
-//             }
-//       console.log('response resonse', response);
-// }
 /***************************************************************************************************
  * highlightText
  *Input -
@@ -476,6 +527,10 @@ function highlightTextInput(){
       else if(input_text!==''){
             $(this).closest('div').addClass('has-success');
             $(this).closest('div').removeClass('has-error');
+            let warning_text = $(this).closest('div').next();
+            if(warning_text.hasClass('text-danger')){
+                  warning_text.remove();
+            }
       }
 }
 /***************************************************************************************************
@@ -520,3 +575,28 @@ function validateAddStudent(){
             addStudent();
       }
 }
+
+/***************************************************************************************************
+ * removeErrorMessages - 
+ *Input -
+ * @param: 
+ * @returns 
+ */
+ function removeErrorMessages(){
+       if( $('#studentName').val()===''
+            && $('#course').val()===''
+            && $('#studentGrade').val()==='')
+            {
+      $('.errorMessage').remove();
+      }
+ }
+
+/***************************************************************************************************
+ * removeErrorMessages - 
+ *Input -
+ * @param: 
+ * @returns 
+ */
+ function setTwoNumberDecimal(inputBar) {
+      inputBar.value = parseFloat(inputBar.value).toFixed(2);
+  };

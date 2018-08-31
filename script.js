@@ -176,7 +176,6 @@ function renderStudentOnDom( studentObj ) {
       });
 
       var empty_td1 = $('<td>');
-      var empty_td2 = $('<td>');
 
       var confirmation_td_buttons = $('<td>');
 

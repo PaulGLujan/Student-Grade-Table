@@ -575,7 +575,12 @@ function validateAddStudent(){
  * @returns 
  */
  function removeErrorMessages(){
-       $('.errorMessage').remove();
+       if( $('#studentName').val()===''
+            && $('#course').val()===''
+            && $('#studentGrade').val()==='')
+            {
+      $('.errorMessage').remove();
+      }
  }
 
 /***************************************************************************************************

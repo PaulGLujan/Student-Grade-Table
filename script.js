@@ -567,13 +567,23 @@ function validateAddStudent(){
             addStudent();
       }
 }
+
 /***************************************************************************************************
  * removeErrorMessages - 
  *Input -
  * @param: 
  * @returns 
  */
-
  function removeErrorMessages(){
        $('.errorMessage').remove();
  }
+
+/***************************************************************************************************
+ * removeErrorMessages - 
+ *Input -
+ * @param: 
+ * @returns 
+ */
+ function setTwoNumberDecimal(inputBar) {
+      inputBar.value = parseFloat(inputBar.value).toFixed(2);
+  };

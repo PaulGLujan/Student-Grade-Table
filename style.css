@@ -1,7 +1,7 @@
 td {
     word-break:break-all;
 }
-@media all and (orientation:portrait) and (max-width: 475px) {
+@media all and (max-width: 475px) {
     td {
         font-size: 11px;
     }

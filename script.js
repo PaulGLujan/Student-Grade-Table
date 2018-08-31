@@ -171,10 +171,11 @@ function renderStudentOnDom( studentObj ) {
 
       var inner_td_message = $('<td>', {
             text: 'Are you sure?',
+            class: "text-right",
+            'colspan': 2,
       });
 
       var empty_td1 = $('<td>');
-      var empty_td2 = $('<td>');
 
       var confirmation_td_buttons = $('<td>');
 
@@ -188,6 +189,9 @@ function renderStudentOnDom( studentObj ) {
             class: 'btn btn-warning',
       })
 
+      addIconsForMobile();
+      $(window).resize(addIconsForMobile);
+
       $(inner_td_button).append(del_button, edit_button_initial);
       $(outer_tr).append(inner_td_name, inner_td_course, inner_td_grade, inner_td_button);
       $('.student-list tbody').append(outer_tr);
@@ -195,6 +199,11 @@ function renderStudentOnDom( studentObj ) {
       function editMode(){
             if(edit_clicked){
                   return
+            }
+            if($(window).width()<475){
+                  save_button.html('<i class="far fa-save"></i>');   
+            } else {
+                  save_button.html('Save');   
             }
 
             edit_clicked = true;
@@ -222,6 +231,7 @@ function renderStudentOnDom( studentObj ) {
                   &&!$(e.target).is($(nameInput))
                   &&!$(e.target).is($(courseInput))
                   &&!$(e.target).is($(gradeInput))
+                  &&!$(e.target).is('i.fas.fa-edit')
             ) {
                         exitEditMode.call(this)
                   }
@@ -303,6 +313,7 @@ function renderStudentOnDom( studentObj ) {
                   if(!$(e.target).is($(no_button))
                   &&!$(e.target).is($(yes_button))
                   &&!$(e.target).is($(del_button))
+                  &&!$(e.target).is('i.fas.fa-trash-alt')
             ) {
                         exitDeleteMode.call(this)
                   }
@@ -313,7 +324,7 @@ function renderStudentOnDom( studentObj ) {
             
             //Assemble elements and append to DOM
             $(confirmation_td_buttons).append(no_button, yes_button);
-            $(confirmation_outer_tr).append(empty_td1, empty_td2, inner_td_message, confirmation_td_buttons);
+            $(confirmation_outer_tr).append(empty_td1, inner_td_message, confirmation_td_buttons);
             $(outer_tr).after(confirmation_outer_tr);
       }
       
@@ -325,6 +336,25 @@ function renderStudentOnDom( studentObj ) {
 
             //Reassigns click handler to delete button
             del_button.click(addErrorConfirmationBar);
+      }
+
+      function addIconsForMobile(){
+            console.log('addIconsForMobile', $(window).width());
+            if($(window).width()<475){
+                  nameInput.attr('size', 8);
+                  courseInput.attr('size', 8);
+                  del_button.html('<i class="fas fa-trash-alt"></i>');  
+                  edit_button_initial.html('<i class="fas fa-edit"></i>'); 
+                  yes_button.html('<i class="fas fa-check"></i>');  
+                  no_button.html('<i class="fa fa-ban" aria-hidden="true"></i>');    
+            } else {
+                  nameInput.attr('size', 12);
+                  courseInput.attr('size', 12);
+                  del_button.html('Delete');  
+                  edit_button_initial.html('Edit'); 
+                  yes_button.html('Yes');  
+                  no_button.html('No'); 
+            }
       }
 }
 /***************************************************************************************************

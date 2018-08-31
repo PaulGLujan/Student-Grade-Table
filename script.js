@@ -49,6 +49,7 @@ function addClickHandlersToElements(){
             }
         });
       $('.form-control').on('input', highlightTextInput);
+      $('.student-list-container').on('click', removeErrorMessages);
 }
 
 /***************************************************************************************************
@@ -566,3 +567,13 @@ function validateAddStudent(){
             addStudent();
       }
 }
+/***************************************************************************************************
+ * removeErrorMessages - 
+ *Input -
+ * @param: 
+ * @returns 
+ */
+
+ function removeErrorMessages(){
+       $('.errorMessage').remove();
+ }

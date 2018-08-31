@@ -171,6 +171,8 @@ function renderStudentOnDom( studentObj ) {
 
       var inner_td_message = $('<td>', {
             text: 'Are you sure?',
+            class: "text-right",
+            'colspan': 2,
       });
 
       var empty_td1 = $('<td>');
@@ -327,7 +329,7 @@ function renderStudentOnDom( studentObj ) {
             
             //Assemble elements and append to DOM
             $(confirmation_td_buttons).append(no_button, yes_button);
-            $(confirmation_outer_tr).append(empty_td1, empty_td2, inner_td_message, confirmation_td_buttons);
+            $(confirmation_outer_tr).append(empty_td1, inner_td_message, confirmation_td_buttons);
             $(outer_tr).after(confirmation_outer_tr);
       }
       

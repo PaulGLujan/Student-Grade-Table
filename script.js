@@ -44,8 +44,10 @@ function addClickHandlersToElements(){
       $('.add_button').on('click', handleAddClicked);
       $('.cancel_button').on('click', handleCancelClick);
       $(document).keypress(function(e) {
-            if(e.which == 13) {
-                handleAddClicked();
+            if(!edit_clicked){
+                  if(e.which == 13) {
+                        handleAddClicked();
+                  }
             }
         });
       $('.form-control').on('input', highlightTextInput);

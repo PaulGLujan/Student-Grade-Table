@@ -234,6 +234,7 @@ function renderStudentOnDom( studentObj ) {
                   &&!$(e.target).is($(nameInput))
                   &&!$(e.target).is($(courseInput))
                   &&!$(e.target).is($(gradeInput))
+                  &&!$(e.target).is('i.fas.fa-edit')
             ) {
                         exitEditMode.call(this)
                   }
@@ -315,6 +316,7 @@ function renderStudentOnDom( studentObj ) {
                   if(!$(e.target).is($(no_button))
                   &&!$(e.target).is($(yes_button))
                   &&!$(e.target).is($(del_button))
+                  &&!$(e.target).is('i.fas.fa-trash-alt')
             ) {
                         exitDeleteMode.call(this)
                   }

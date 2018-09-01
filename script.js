@@ -131,21 +131,21 @@ function renderStudentOnDom( studentObj ) {
       var del_button = $('<button>', {
             text: 'Delete',
             'data-id': id,
-            class: 'btn btn-danger delete_row',
+            class: 'btn btn-danger delete_row table_button',
             on: {
                   click: addErrorConfirmationBar,
             }
       })
       var edit_button_initial = $('<button>', {
             text: 'Edit',
-            class: 'btn btn-info',
+            class: 'btn btn-info table_button',
             on: {
                   click: editMode
             }
       })
       var save_button = $('<button>', {
             text: 'Save',
-            class: 'btn btn-success',
+            class: 'btn btn-success table_button',
       })
       var nameInput = $('<input />', {
             'class': 'tableInput',
@@ -184,12 +184,12 @@ function renderStudentOnDom( studentObj ) {
 
       var no_button = $('<button>', {
             text: 'No',
-            class: 'btn btn-info',
+            class: 'btn btn-info table_button',
       })
 
       var yes_button = $('<button>', {
             text: 'Yes',
-            class: 'btn btn-warning',
+            class: 'btn btn-warning table_button',
       })
 
       addIconsForMobile();

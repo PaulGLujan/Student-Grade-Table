@@ -11,3 +11,9 @@ td {
 .gap {
     height: 5vh;
 }
+
+@media all and (max-width: 325px) {
+    .table_button {
+        font-size: 11px;
+    }   
+}

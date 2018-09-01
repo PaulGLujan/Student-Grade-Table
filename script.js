@@ -71,6 +71,7 @@ function handleAddClicked( event ){
  */
 function handleCancelClick(){
       clearAddStudentFormInputs();
+      removeErrorMessages();
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -547,6 +548,13 @@ function highlightTextInput(){
 function validateAddStudent(){
       let validate = 0;
 
+      //Trim white spaces
+      $('#studentName').val($('#studentName').val().trim());
+      $('#course').val($('#course').val().trim());
+      highlightTextInput.call($('#studentName')[0]);
+      highlightTextInput.call($('#course')[0]);
+      highlightTextInput.call($('#studentGrade')[0]);
+
       $('.errorMessage').remove();
 
       if($('#studentName').val()===''){
@@ -593,6 +601,9 @@ function validateAddStudent(){
             && $('#studentGrade').val()==='')
             {
       $('.errorMessage').remove();
+      $('#studentName').closest('div').removeClass('has-error');
+      $('#course').closest('div').removeClass('has-error');
+      $('#studentGrade').closest('div').removeClass('has-error');
       }
  }
 

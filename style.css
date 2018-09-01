@@ -4,16 +4,10 @@ td {
 
 @media all and (max-width: 475px) {
     td {
-        font-size: 11px;
+        font-size: 13px;
     }
 }
 
 .gap {
     height: 5vh;
-}
-
-@media all and (max-width: 325px) {
-    .table_button {
-        font-size: 10px;
-    }   
 }

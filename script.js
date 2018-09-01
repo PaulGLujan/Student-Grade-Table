@@ -71,6 +71,7 @@ function handleAddClicked( event ){
  */
 function handleCancelClick(){
       clearAddStudentFormInputs();
+      removeErrorMessages();
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -600,6 +601,9 @@ function validateAddStudent(){
             && $('#studentGrade').val()==='')
             {
       $('.errorMessage').remove();
+      $('#studentName').closest('div').removeClass('has-error');
+      $('#course').closest('div').removeClass('has-error');
+      $('#studentGrade').closest('div').removeClass('has-error');
       }
  }
 

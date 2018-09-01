@@ -552,6 +552,7 @@ function validateAddStudent(){
       $('#course').val($('#course').val().trim());
       highlightTextInput.call($('#studentName')[0]);
       highlightTextInput.call($('#course')[0]);
+      highlightTextInput.call($('#studentGrade')[0]);
 
       $('.errorMessage').remove();
 

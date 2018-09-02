@@ -342,6 +342,7 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
+            $(document).off('click');
             //Remove confirmation elements and color highlight
             confirmation_outer_tr.empty();
             confirmation_outer_tr.remove();

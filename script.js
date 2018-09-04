@@ -206,6 +206,7 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
+            console.log('editMode running');
             if(edit_clicked){
                   return
             }
@@ -279,6 +280,7 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function exitEditMode(){
+            console.log('exitEditMode running');
 
             $(document).off('click');
 
@@ -307,6 +309,7 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
+            console.log('addErrorConfirmationBar');
             if(edit_clicked){
                   return
             }
@@ -342,6 +345,7 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
+            console.log('exitDeleteMode');
             $(document).off('click');
             //Remove confirmation elements and color highlight
             confirmation_outer_tr.empty();

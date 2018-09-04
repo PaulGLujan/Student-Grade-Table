@@ -206,10 +206,11 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
-            console.log('editMode running');
+            console.log('editMode initial', edit_clicked);
             if(edit_clicked){
                   return
             }
+            console.log('editMode !! engaged !!', edit_clicked);
             if($(window).width()<475){
                   save_button.html('<i class="far fa-save"></i>');   
             } else {
@@ -309,10 +310,11 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
-            console.log('addErrorConfirmationBar');
+            console.log('addErrorConfirmationBar initial', edit_clicked);
             if(edit_clicked){
                   return
             }
+            console.log('addErrorConfirmationBar - It\'s on!');
             //Adds event handlers to yes and no buttons
             edit_clicked = true;
             no_button.click(exitDeleteMode);

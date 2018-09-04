@@ -287,6 +287,9 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function exitEditMode(){
+            if(!edit_clicked){
+                  return
+            }
             console.log('%c exitEditMode running', 'color: orange');
 
             $(document).off('click');
@@ -353,6 +356,9 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
+            if(!edit_clicked){
+                  return
+            }
             console.log('%c exitDeleteMode', 'color: orange');
             $(document).off('click');
             //Remove confirmation elements and color highlight

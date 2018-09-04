@@ -1,6 +1,6 @@
 # Student Grade Table 
 
-This student grade table was made as an excercise in Content Management System (CMS) creation. The UX of the table focuses on seamless user input validation and positioning prompts in convenient screen locations. Access <a href="https://paulglujan.com/student-grade-table/" target="_blank">the live demo</a> for a demonstration.
+This student grade table was made as an excercise in Content Management System (CMS) creation. The UX of the table focuses on seamless user input validation and positioning prompts in convenient screen locations. Access [the live demo](https://paulglujan.com/student-grade-table/){:target="_blank"} for a demonstration.
 
 ## Features 
 
@@ -28,5 +28,3 @@ This student grade table was made as an excercise in Content Management System (
   
   ## Contributions
 Currently we are not open to outside contributions.
-
-   [the live demo]: <https://paulglujan.com/student-grade-table/>

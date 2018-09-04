@@ -1,6 +1,6 @@
 # Student Grade Table 
 
-This student grade table was made as an excercise in Content Management System (CMS) creation. The UX of the table focuses on seamless user input validation and positioning prompts in convenient screen locations. The  Access [the live demo] for a demonstration.
+This student grade table was made as an excercise in Content Management System (CMS) creation. The UX of the table focuses on seamless user input validation and positioning prompts in convenient screen locations. Access [the live demo] for a demonstration.
 
 ## Features 
 

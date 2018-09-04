@@ -12,6 +12,7 @@ $(document).ready(initializeApp);
  */
 var student_array = [];
 var edit_clicked = false;
+var save_del_async_call = false;
 /***********************
  * student_array - global array to hold student objects
  * @type {Array}
@@ -52,6 +53,10 @@ function addClickHandlersToElements(){
         });
       $('.form-control').on('input', highlightTextInput);
       $('.student-list-container').on('click', removeErrorMessages);
+      $('body').on('mousedown', function(){
+      })
+      $('body').on('mouseup', function(){
+      })
 }
 
 /***************************************************************************************************
@@ -206,8 +211,7 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
-            console.log('editMode running');
-            if(edit_clicked){
+            if(edit_clicked || save_del_async_call){
                   return
             }
             if($(window).width()<475){
@@ -271,16 +275,20 @@ function renderStudentOnDom( studentObj ) {
                               name = $(nameInput).val();
                               course = $(courseInput).val();
                               grade = parseInt($(gradeInput).val());
+                              save_del_async_call = false;
                               exitEditMode();
                         }
                   },
                   dataType: 'json',
             };
+            save_del_async_call = true;
             $.ajax( ajaxOptions )
       }
 
       function exitEditMode(){
-            console.log('exitEditMode running');
+            if(!edit_clicked){
+                  return
+            }
 
             $(document).off('click');
 
@@ -309,8 +317,7 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
-            console.log('addErrorConfirmationBar');
-            if(edit_clicked){
+            if(edit_clicked||save_del_async_call){
                   return
             }
             //Adds event handlers to yes and no buttons
@@ -345,7 +352,9 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
-            console.log('exitDeleteMode');
+            if(!edit_clicked){
+                  return
+            }
             $(document).off('click');
             //Remove confirmation elements and color highlight
             confirmation_outer_tr.empty();
@@ -486,6 +495,7 @@ function deleteData ( current_index, outer_tr ) {
                   'student_id': current_index 
             },
             success: function (response){
+                  save_del_async_call = false;
                   for (let i=0; i<student_array.length; i++){
                         if(student_array[i].id === current_index){
                               student_array.splice(i, 1);
@@ -502,6 +512,7 @@ function deleteData ( current_index, outer_tr ) {
             // success: doWhenDataSentAndReturned,
             dataType: 'json',
         };
+        save_del_async_call = true;
         $.ajax( ajaxOptions )
 }
 

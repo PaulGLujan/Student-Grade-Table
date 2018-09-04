@@ -52,6 +52,12 @@ function addClickHandlersToElements(){
         });
       $('.form-control').on('input', highlightTextInput);
       $('.student-list-container').on('click', removeErrorMessages);
+      $('body').on('mousedown', function(){
+            console.log('--Mousedown -', edit_clicked);
+      })
+      $('body').on('mouseup', function(){
+            console.log('--Mouse up ---');
+      })
 }
 
 /***************************************************************************************************
@@ -206,11 +212,11 @@ function renderStudentOnDom( studentObj ) {
       $('.student-list tbody').append(outer_tr);
 
       function editMode(){
-            console.log('editMode initial', edit_clicked);
+            console.log('%c editMode initial', 'color: blue', edit_clicked);
             if(edit_clicked){
                   return
             }
-            console.log('editMode !! engaged !!', edit_clicked);
+            console.log('%c editMode engaged', 'color: green', edit_clicked);
             if($(window).width()<475){
                   save_button.html('<i class="far fa-save"></i>');   
             } else {
@@ -281,7 +287,7 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function exitEditMode(){
-            console.log('exitEditMode running');
+            console.log('%c exitEditMode running', 'color: orange');
 
             $(document).off('click');
 
@@ -310,11 +316,11 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function addErrorConfirmationBar(){
-            console.log('addErrorConfirmationBar initial', edit_clicked);
+            console.log('%c addErrorConfirmationBar initial', 'color: blue', edit_clicked);
             if(edit_clicked){
                   return
             }
-            console.log('addErrorConfirmationBar - It\'s on!');
+            console.log('%c addErrorConfirmationBar - It\'s on!', 'color: green');
             //Adds event handlers to yes and no buttons
             edit_clicked = true;
             no_button.click(exitDeleteMode);
@@ -347,7 +353,7 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
-            console.log('exitDeleteMode');
+            console.log('%c exitDeleteMode', 'color: orange');
             $(document).off('click');
             //Remove confirmation elements and color highlight
             confirmation_outer_tr.empty();

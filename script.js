@@ -287,6 +287,7 @@ function renderStudentOnDom( studentObj ) {
       }
 
       function exitEditMode(){
+            console.log('%c exitEditMode initial', 'color: blue', edit_clicked);
             if(!edit_clicked){
                   return
             }
@@ -356,6 +357,7 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
+            console.log('%c exitDeleteMode initial', 'color: blue', edit_clicked);
             if(!edit_clicked){
                   return
             }

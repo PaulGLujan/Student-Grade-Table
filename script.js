@@ -278,6 +278,7 @@ function renderStudentOnDom( studentObj ) {
                               name = $(nameInput).val();
                               course = $(courseInput).val();
                               grade = parseInt($(gradeInput).val());
+                              console.log('%c sendUpdate successful', 'color: yellow');
                               exitEditMode();
                         }
                   },

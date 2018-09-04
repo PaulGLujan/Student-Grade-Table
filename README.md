@@ -1,6 +1,6 @@
 # Student Grade Table 
 
-This student grade table was made as an excercise in Content Management System (CMS) creation. The UX of the table focuses on seamless user input validation and positioning prompts in convenient screen locations. Access [the live demo] for a demonstration.
+This student grade table was made as an excercise in Content Management System (CMS) creation. The UX of the table focuses on seamless user input validation and positioning prompts in convenient screen locations. Access <a href="https://paulglujan.com/student-grade-table/" target="_blank">the live demo</a> for a demonstration.
 
 ## Features 
 
@@ -9,6 +9,15 @@ This student grade table was made as an excercise in Content Management System (
   - Calculate the average grade of the students 
   - Delete students with a prompt to opt out 
   - Edit and save student data
+  
+## Built With 
+
+  - Bootstrap
+  - PHP
+  - MySQL
+  - jQuery
+  - Javascript
+  - HTML/CSS
   
 ## Planned Features 
 

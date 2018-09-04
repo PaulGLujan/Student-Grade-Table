@@ -12,6 +12,7 @@ $(document).ready(initializeApp);
  */
 var student_array = [];
 var edit_clicked = false;
+var save_del_async_call = false;
 /***********************
  * student_array - global array to hold student objects
  * @type {Array}
@@ -213,7 +214,7 @@ function renderStudentOnDom( studentObj ) {
 
       function editMode(){
             console.log('%c editMode initial', 'color: blue', edit_clicked);
-            if(edit_clicked){
+            if(edit_clicked || save_del_async_call){
                   return
             }
             console.log('%c editMode engaged', 'color: green', edit_clicked);
@@ -279,11 +280,13 @@ function renderStudentOnDom( studentObj ) {
                               course = $(courseInput).val();
                               grade = parseInt($(gradeInput).val());
                               console.log('%c sendUpdate successful', 'color: yellow');
+                              save_del_async_call = false;
                               exitEditMode();
                         }
                   },
                   dataType: 'json',
             };
+            save_del_async_call = true;
             $.ajax( ajaxOptions )
       }
 
@@ -322,7 +325,7 @@ function renderStudentOnDom( studentObj ) {
 
       function addErrorConfirmationBar(){
             console.log('%c addErrorConfirmationBar initial', 'color: blue', edit_clicked);
-            if(edit_clicked){
+            if(edit_clicked||save_del_async_call){
                   return
             }
             console.log('%c addErrorConfirmationBar - It\'s on!', 'color: green');
@@ -503,6 +506,7 @@ function deleteData ( current_index, outer_tr ) {
                   'student_id': current_index 
             },
             success: function (response){
+                  save_del_async_call = false;
                   for (let i=0; i<student_array.length; i++){
                         if(student_array[i].id === current_index){
                               student_array.splice(i, 1);
@@ -519,6 +523,7 @@ function deleteData ( current_index, outer_tr ) {
             // success: doWhenDataSentAndReturned,
             dataType: 'json',
         };
+        save_del_async_call = true;
         $.ajax( ajaxOptions )
 }
 

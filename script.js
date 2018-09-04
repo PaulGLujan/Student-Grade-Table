@@ -71,6 +71,7 @@ function handleAddClicked( event ){
  */
 function handleCancelClick(){
       clearAddStudentFormInputs();
+      removeErrorMessages();
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -129,6 +130,7 @@ function renderStudentOnDom( studentObj ) {
             class: 'col-xs-4',
       });
       var del_button = $('<button>', {
+            type: 'button',
             text: 'Delete',
             'data-id': id,
             class: 'btn btn-danger delete_row table_button',
@@ -137,6 +139,7 @@ function renderStudentOnDom( studentObj ) {
             }
       })
       var edit_button_initial = $('<button>', {
+            type: 'button',
             text: 'Edit',
             class: 'btn btn-info table_button',
             on: {
@@ -144,6 +147,7 @@ function renderStudentOnDom( studentObj ) {
             }
       })
       var save_button = $('<button>', {
+            type: 'button',
             text: 'Save',
             class: 'btn btn-success table_button',
       })
@@ -183,11 +187,13 @@ function renderStudentOnDom( studentObj ) {
       var confirmation_td_buttons = $('<td>');
 
       var no_button = $('<button>', {
+            type: 'button',
             text: 'No',
             class: 'btn btn-info table_button',
       })
 
       var yes_button = $('<button>', {
+            type: 'button',
             text: 'Yes',
             class: 'btn btn-warning table_button',
       })
@@ -336,6 +342,7 @@ function renderStudentOnDom( studentObj ) {
       }
       
       function exitDeleteMode(){
+            $(document).off('click');
             //Remove confirmation elements and color highlight
             confirmation_outer_tr.empty();
             confirmation_outer_tr.remove();
@@ -542,6 +549,13 @@ function highlightTextInput(){
 function validateAddStudent(){
       let validate = 0;
 
+      //Trim white spaces
+      $('#studentName').val($('#studentName').val().trim());
+      $('#course').val($('#course').val().trim());
+      highlightTextInput.call($('#studentName')[0]);
+      highlightTextInput.call($('#course')[0]);
+      highlightTextInput.call($('#studentGrade')[0]);
+
       $('.errorMessage').remove();
 
       if($('#studentName').val()===''){
@@ -588,6 +602,9 @@ function validateAddStudent(){
             && $('#studentGrade').val()==='')
             {
       $('.errorMessage').remove();
+      $('#studentName').closest('div').removeClass('has-error');
+      $('#course').closest('div').removeClass('has-error');
+      $('#studentGrade').closest('div').removeClass('has-error');
       }
  }
 

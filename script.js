@@ -53,10 +53,6 @@ function addClickHandlersToElements(){
         });
       $('.form-control').on('input', highlightTextInput);
       $('.student-list-container').on('click', removeErrorMessages);
-      $('body').on('mousedown', function(){
-      })
-      $('body').on('mouseup', function(){
-      })
 }
 
 /***************************************************************************************************
@@ -382,6 +378,12 @@ function renderStudentOnDom( studentObj ) {
                   edit_button_initial.html('Edit'); 
                   yes_button.html('Yes');  
                   no_button.html('No'); 
+            }
+
+            if($(window).width()<355){
+                  $('.student-list-container').addClass('table-responsive');
+            }else{
+                  $('.student-list-container').removeClass('table-responsive');
             }
       }
 }
